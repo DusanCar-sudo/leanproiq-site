@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lean Progress IQ — AI Evaluation Work for People Outside the US</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Your passport is the real application.">
+<meta property="og:description" content="Eligibility, identity and payment rails for AI evaluation work — written for people who don't live in the United States.">
+<meta property="og:site_name" content="Lean Progress IQ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Your passport is the real application.">
+<meta name="twitter:description" content="Which AI evaluation platforms actually accept your country — and what blocks your first payout.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B1622'/><text x='16' y='23' font-family='sans-serif' font-size='19' font-weight='700' fill='%235FC9DD' text-anchor='middle'>L</text></svg>">
+<meta name="description" content="Most guides to AI training work are written for Americans. This one isn't. Country gates, ID mismatches, payment rails — and what the work actually is, from someone who builds the systems being evaluated.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1622;
+  --ink-2:#13222F;
+  --paper:#F2EFE9;
+  --paper-2:#E7E2D8;
+  --cyan:#5FC9DD;
+  --terra:#CC785C;
+  --open:#4E9E82;
+  --shut:#C25640;
+  --muted:#7C8B98;
+  --rule:rgba(11,22,34,.14);
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{
+  font-family:'Barlow',system-ui,sans-serif;
+  background:var(--paper); color:var(--ink);
+  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2,h3,.disp{font-family:'Barlow Condensed',sans-serif;line-height:1.04;letter-spacing:.005em}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:2px}
+
+/* ---------- masthead ---------- */
+.top{background:var(--ink);color:var(--paper);padding:14px 0;border-bottom:3px solid var(--cyan)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;letter-spacing:.16em;text-transform:uppercase}
+.brand span{color:var(--cyan)}
+.topmeta{font-family:var(--mono);font-size:11px;color:#8FA3B3;letter-spacing:.06em}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:var(--paper);padding:64px 0 72px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(95,201,221,.05) 0 1px,transparent 1px 68px)}
+.hero .wrap{position:relative;z-index:1}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
+h1{font-size:clamp(40px,7vw,78px);font-weight:700;text-transform:uppercase;max-width:16ch}
+h1 em{font-style:normal;color:var(--terra)}
+.lede{margin-top:22px;max-width:60ch;font-size:clamp(17px,2vw,20px);color:#C6D2DC}
+.lede b{color:var(--paper);font-weight:600}
+
+/* ---------- checker ---------- */
+.checker{background:var(--ink-2);border:1px solid rgba(95,201,221,.22);border-radius:4px;margin-top:40px;overflow:hidden}
+.checker-head{padding:20px 22px;border-bottom:1px solid rgba(95,201,221,.18);display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.checker-head label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
+select{
+  font-family:'Barlow',sans-serif;font-size:17px;font-weight:600;
+  background:var(--ink);color:var(--paper);border:1px solid rgba(95,201,221,.35);
+  border-radius:3px;padding:10px 14px;min-width:230px;cursor:pointer
+}
+.checker-note{font-size:14px;color:var(--muted);flex:1;min-width:200px}
+.rows{padding:6px 0}
+.row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+  padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.055)}
+.row:last-child{border-bottom:0}
+.row-name{font-weight:600;font-size:16.5px}
+.row-why{font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.verdict{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 10px;border-radius:3px;white-space:nowrap;font-weight:600}
+.v-open{background:rgba(78,158,130,.16);color:#7FC7AC;border:1px solid rgba(78,158,130,.4)}
+.v-shut{background:rgba(194,86,64,.14);color:#E08A72;border:1px solid rgba(194,86,64,.4)}
+.v-check{background:rgba(204,120,92,.13);color:var(--terra);border:1px solid rgba(204,120,92,.38)}
+.tally{padding:16px 22px;background:rgba(0,0,0,.22);font-family:var(--mono);font-size:12.5px;color:#9DB0BE;letter-spacing:.04em}
+.tally b{color:var(--cyan)}
+
+/* ---------- sections ---------- */
+section{padding:76px 0;border-bottom:1px solid var(--rule)}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:14px}
+h2{font-size:clamp(30px,4.6vw,46px);font-weight:700;text-transform:uppercase;max-width:20ch;margin-bottom:22px}
+.body-col{max-width:68ch}
+.body-col p{margin-bottom:18px}
+.body-col p:last-child{margin-bottom:0}
+.body-col b{font-weight:600}
+
+.walls{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;margin-top:44px;background:var(--rule)}
+.wall{background:var(--paper);padding:28px 24px}
+.wall-n{font-family:var(--mono);font-size:11px;color:var(--terra);letter-spacing:.16em;margin-bottom:12px}
+.wall h3{font-size:23px;font-weight:600;text-transform:uppercase;margin-bottom:10px}
+.wall p{font-size:15.5px;color:#3D4E5C;line-height:1.55}
+
+.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+@media(max-width:820px){.two{grid-template-columns:1fr;gap:36px}}
+
+.credbox{background:var(--ink);color:var(--paper);padding:34px 32px;border-left:4px solid var(--cyan);border-radius:3px}
+.credbox h3{font-size:21px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;font-weight:600}
+.credbox ul{list-style:none}
+.credbox li{padding:9px 0 9px 20px;position:relative;font-size:15.5px;color:#C6D2DC;border-bottom:1px solid rgba(255,255,255,.07)}
+.credbox li:last-child{border-bottom:0}
+.credbox li:before{content:"";position:absolute;left:0;top:17px;width:7px;height:1.5px;background:var(--terra)}
+.credbox li b{color:var(--paper);font-weight:600}
+
+.cta{background:var(--ink);color:var(--paper);border-bottom:0}
+.cta h2{color:var(--paper)}
+.cta .body-col p{color:#C6D2DC}
+.btn{display:inline-block;background:var(--cyan);color:var(--ink);font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:19px;letter-spacing:.1em;text-transform:uppercase;
+  padding:16px 34px;border-radius:3px;text-decoration:none;margin-top:26px;transition:background .15s}
+.btn:hover{background:#7FD8E8}
+.btn-2{background:transparent;color:var(--cyan);border:1px solid rgba(95,201,221,.5);margin-left:12px}
+.btn-2:hover{background:rgba(95,201,221,.1)}
+@media(max-width:560px){.btn-2{margin-left:0;margin-top:12px}}
+
+.honest{background:var(--paper-2);padding:30px 28px;border-radius:3px;margin-top:40px;font-size:15.5px;color:#3D4E5C;max-width:70ch}
+.honest strong{display:block;font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink);margin-bottom:10px}
+
+
+
+/* ---------- fairness statement ---------- */
+.fair{background:var(--ink);color:var(--paper);border-bottom:0}
+.fair h2{color:var(--paper)}
+.fair .kicker{color:var(--cyan)}
+.fair-lede{max-width:64ch;font-size:clamp(18px,2.1vw,21px);color:#C6D2DC;line-height:1.55;margin-bottom:30px}
+.fair-lede b{color:var(--paper);font-weight:600}
+.fair-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;
+  background:rgba(255,255,255,.12);margin-top:38px;border-radius:3px;overflow:hidden}
+.fair-card{background:var(--ink-2);padding:28px 26px}
+.fair-card h3{font-size:20px;text-transform:uppercase;font-weight:600;color:var(--cyan);margin-bottom:12px}
+.fair-card p{font-size:15.5px;color:#C0CDD8;line-height:1.55}
+.pullquote{border-left:3px solid var(--terra);padding:4px 0 4px 22px;margin:32px 0;
+  font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:500;
+  line-height:1.25;color:var(--paper);max-width:26ch}
+
+/* ---------- pricing ---------- */
+.priceblock{margin-top:40px;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
+.priceblock-head{padding:20px 22px;background:var(--paper-2);border-bottom:1px solid var(--rule);
+  display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+.priceblock-head label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--terra);margin-bottom:8px}
+select.light{background:#fff;color:var(--ink);border:1px solid var(--rule)}
+.idxnote{font-family:var(--mono);font-size:12px;color:#5C6E7C;flex:1;min-width:220px}
+.idxnote b{color:var(--ink)}
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.tier{padding:24px 22px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.tier:last-child{border-right:0}
+.tier-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;
+  text-transform:uppercase;margin-bottom:6px}
+.tier-price{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:700;
+  color:var(--ink);line-height:1;margin-bottom:4px}
+.tier-price small{font-size:17px;color:var(--muted);font-weight:500}
+.tier-base{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px}
+.tier-what{font-size:14.5px;color:#3D4E5C;line-height:1.5}
+.formula{padding:22px;background:var(--ink);color:#B9C7D3;font-family:var(--mono);
+  font-size:13px;line-height:1.7}
+.formula b{color:var(--cyan)}
+.formula .eq{display:block;margin:10px 0;color:var(--paper);font-size:14px}
+footer{background:var(--ink);color:#8FA3B3;padding:44px 0;font-size:14px}
+footer a{color:var(--cyan);text-decoration:none}
+footer a:hover{text-decoration:underline}
+.f-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">Lean Progress <span>IQ</span></div>
+    <div class="topmeta">DA NANG, VN &nbsp;·&nbsp; ZRENJANIN, RS</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">AI evaluation work — for the rest of the world</div>
+    <h1>Your passport is<br>the <em>real</em> application.</h1>
+    <p class="lede">Every guide to AI training work is written for someone in Ohio. It never mentions that your ID country has to match your profile country, that half the platforms silently exclude you, or that your first payout can be frozen by a rule your bank never told you about. <b>Start with what's actually open to you.</b></p>
+
+    <div class="checker">
+      <div class="checker-head">
+        <div>
+          <label for="country">Where is your passport from?</label>
+          <select id="country" aria-label="Select your country">
+            <option value="">Select a country…</option>
+          </select>
+        </div>
+        <p class="checker-note">Eligibility below reflects published platform policy as of August 2026. Policies change — always confirm on the platform itself before uploading documents.</p>
+      </div>
+      <div class="rows" id="rows">
+        <div class="row"><div><div class="row-name">Select a country to see your real options.</div><div class="row-why">Nine platforms checked against citizenship, ID requirements and payout rails.</div></div></div>
+      </div>
+      <div class="tally" id="tally">Nine platforms · updated August 2026</div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <div class="kicker">Why this exists</div>
+        <h2>I build the systems these platforms are grading.</h2>
+        <div class="body-col">
+          <p>I'm a Serbian citizen living in Da Nang. I hold a Serbian passport, a Vietnamese bank account, and a Payoneer balance — a combination that breaks about half the verification systems in this industry.</p>
+          <p>I also design AI agent systems. I wrote a <b>320-question evaluation benchmark</b>, ran a <b>50-day longitudinal model trial</b> publishing automated results daily, built fine-tuning pipelines on Vertex AI, and shipped a multi-agent framework to npm under MIT licence.</p>
+          <p>So when I say a rationale is weak or a rubric is ambiguous, that isn't a guess from someone who read a listicle. I've written the harness that grades them. And when I say a platform will reject your ID, it's because it rejected mine.</p>
+          <p>Most people entering this field are taught to label outputs. Almost nobody is taught what the evaluation is <em>for</em>. That gap is where the pay difference lives.</p>
+        </div>
+      </div>
+      <div class="credbox">
+        <h3>Where this comes from</h3>
+        <ul>
+          <li><b>aura-code</b> — multi-agent framework, 1,559 tests, MIT licensed, published to npm</li>
+          <li><b>Aura Benchmark</b> — 320-question agent evaluation harness; authored questions, scoring criteria and execution</li>
+          <li><b>50-day trial</b> — longitudinal model evaluation with daily automated published results</li>
+          <li><b>Fine-tuning pipelines</b> — supervised fine-tuning on Google Vertex AI, ~11M-word Serbian legal corpus</li>
+          <li><b>Teaching</b> — BA English Language &amp; Literature, TEFL, 11+ years instructing corporate professionals</li>
+          <li><b>Enterprise operations</b> — SAP ERP superuser, Lean/PDCA, automotive tier-1 logistics</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">What actually stops people</div>
+    <h2>Four walls. None of them are about skill.</h2>
+    <div class="body-col"><p>Almost everyone who fails at this fails before they ever see a task. Not because the work was too hard — because of an administrative wall nobody warned them about.</p></div>
+    <div class="walls">
+      <div class="wall">
+        <div class="wall-n">WALL 01</div>
+        <h3>Citizenship vs. residence</h3>
+        <p>If your profile says one country and your ID says another, verification fails — and most platforms give you two or three attempts total. Which country you declare is a decision to make deliberately, before you sign up, not a form field to fill in casually.</p>
+      </div>
+      <div class="wall">
+        <div class="wall-n">WALL 02</div>
+        <h3>Silent geography gates</h3>
+        <p>Several well-known platforms simply don't operate where you live, and won't say so until after you've built a profile. Others accept your signup but show no available tasks. Knowing which is which saves weeks.</p>
+      </div>
+      <div class="wall">
+        <div class="wall-n">WALL 03</div>
+        <h3>Getting paid, actually</h3>
+        <p>PayPal, Payoneer, Stripe and local banks each fail differently depending on where you are. Name spelling mismatches, foreign-currency restrictions, annual fees on low volume, and biometric thresholds can all hold your first payment.</p>
+      </div>
+      <div class="wall">
+        <div class="wall-n">WALL 04</div>
+        <h3>Writing like an evaluator</h3>
+        <p>Most applicants are screened out on a written sample. The bar isn't fluency — it's whether your rationale is specific, falsifiable, and useful to someone training a model. That's a learnable skill and almost nobody teaches it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="fair">
+  <div class="wrap">
+    <div class="kicker">On price</div>
+    <h2>Fair pricing, said out loud.</h2>
+
+    <p class="fair-lede">Plenty of companies already do this. They read your location, quietly adjust the number, and never mention it. <b>I'd rather write it down and let you check the arithmetic.</b></p>
+
+    <div class="body-col" style="color:#C6D2DC">
+      <p>The same hour of my time costs a different amount of life depending on where you're standing. Sixty dollars is an evening out in Berlin and most of a week's food in Lagos. Charging both people sixty dollars isn't neutral — it just hides the unfairness somewhere you can't see it.</p>
+      <p>So the price scales with your country's purchasing power, using published GDP-per-capita PPP figures. Same session, same preparation, same attention. Different number, for a stated reason.</p>
+    </div>
+
+    <blockquote class="pullquote">One price for everyone is not the same thing as treating everyone equally.</blockquote>
+
+    <div class="fair-grid">
+      <div class="fair-card">
+        <h3>I benefit from this too</h3>
+        <p>I'm a Serbian citizen living in Da Nang. My own costs are low, which is precisely why I can price an hour in Nigeria at thirty dollars without it being charity. This isn't generosity — it's arithmetic that happens to work.</p>
+      </div>
+      <div class="fair-card">
+        <h3>The floor is for me</h3>
+        <p>I can earn around twenty-eight dollars an hour doing evaluation work directly. Below that, teaching costs me money rather than earning it. The floor isn't a sales tactic. It's the line where this stops being something I can keep doing.</p>
+      </div>
+      <div class="fair-card">
+        <h3>No proof required</h3>
+        <p>I won't ask for a utility bill, check your IP address, or make you prove anything. Tell me where you are and I'll take your word for it. If the adjusted number is still out of reach, write and say so — that conversation is not a problem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">What it costs</div>
+    <h2>Priced against your economy, not mine.</h2>
+    <div class="body-col">
+      <p>Charging one flat rate worldwide would mean someone in Lagos pays four times as much of their income as someone in Berlin for the same hour. So prices scale with <b>GDP per capita at purchasing power parity</b>, floored so the work stays sustainable for me.</p>
+      <p>The formula is published below. You can check my arithmetic.</p>
+    </div>
+
+    <div class="priceblock">
+      <div class="priceblock-head">
+        <div>
+          <label for="pcountry">Where are you?</label>
+          <select class="light" id="pcountry" aria-label="Select your country for pricing"></select>
+        </div>
+        <p class="idxnote" id="idxnote">Select a country to see your rate.</p>
+      </div>
+      <div class="tiers" id="tiers"></div>
+      <div class="formula">
+        <b>How your price is calculated</b>
+        <span class="eq">price = base_rate &times; &radic;( your_country_PPP &divide; US_PPP ), floored</span>
+        Base rates are US-anchored. The square root compresses the spread — a straight linear ratio would put some countries under $10 and make the work impossible to sustain. The floor is my own opportunity cost: I can earn roughly $28/hr doing evaluation work directly, so no session is priced below that.<br><br>
+        GDP per capita PPP figures: IMF World Economic Outlook and World Bank, 2024&ndash;2025 estimates in international dollars. Approximate and refreshed periodically. <b>If your country isn't listed, ask</b> &mdash; I'll calculate it the same way.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="kicker" style="color:var(--cyan)">Start here</div>
+    <h2>The eligibility &amp; payments guide</h2>
+    <div class="body-col">
+      <p>A plain document covering all nine platforms: which accept your country, what ID they demand, how they pay, what each one actually pays, and the specific traps that block first payouts. Written from the outside-the-US position, because that's where I'm standing.</p>
+      <p>Free, no email required, no course upsell attached. Six pages. Take it and go.</p>
+    </div>
+    <a class="btn" href="/eligibility-guide.pdf" download>Download the guide (PDF)</a>
+    <a class="btn btn-2" href="mailto:leanproiq@gmail.com?subject=1:1%20session">Ask about 1:1 sessions</a>
+
+    <div class="honest" style="background:rgba(255,255,255,.06);color:#C6D2DC">
+      <strong>What I won't tell you</strong>
+      I won't quote you a monthly income figure, because mine would be a sample size of one and yours depends on your country's rate tier, your available hours, and which platforms accept you. Anyone showing you screenshots of their earnings is selling something. This work is real, it is not passive, the task supply is inconsistent, and rates vary by where you live. I'll show you the published rates and the actual obstacles. What you make from that is yours to find out.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap f-row">
+    <div>
+      <div class="brand" style="font-size:16px;margin-bottom:8px">Lean Progress <span>IQ</span></div>
+      <div>Dušan Milosavljević · Da Nang, Vietnam</div>
+    </div>
+    <div style="text-align:right">
+      <a href="mailto:leanproiq@gmail.com">leanproiq@gmail.com</a><br>
+      <a href="https://github.com/DusanCar-sudo">github.com/DusanCar-sudo</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const PLATFORMS = [
+  {id:"outlier",   name:"Outlier (Scale AI)",  pay:"$15–100/hr",  rail:"PayPal · Airtm · ACH, weekly Tuesdays"},
+  {id:"mindrift",  name:"Mindrift (Toloka)",   pay:"$15–100+/hr", rail:"Payoneer · cost-of-living adjusted by country"},
+  {id:"opentrain", name:"OpenTrain",           pay:"$28–65/hr",   rail:"Stripe, pays into 140+ countries"},
+  {id:"meridial",  name:"Meridial",            pay:"$6–65/hr",    rail:"Global · fastest onboarding of the nine"},
+  {id:"appen",     name:"Appen",               pay:"Varies",      rail:"Payoneer · 30–45 day first payment cycle"},
+  {id:"handshake", name:"Handshake AI",        pay:"$30–300/hr",  rail:"Degree-tiered; content is assigned to the platform"},
+  {id:"braintrust",name:"Braintrust",          pay:"$50–120/hr",  rail:"Restricted region list"},
+  {id:"dataann",   name:"DataAnnotation",      pay:"$20+/hr",     rail:"Five countries only"},
+  {id:"alignerr",  name:"Alignerr",            pay:"$25–60/hr",   rail:"US identity documents only"}
+];
+
+// open | shut | check   +  reason
+const WIDE_OPEN  = {v:"open", w:"Accepts applicants from most countries."};
+const REGION_SET = ["US","GB","CA","MX","BR","IN","JP","KR","SG","DE","FR","ES","IT","NL","PL","PT","IE","SE","RO"];
+const DA_SET     = ["US","GB","CA","AU","NZ"];
+
+const COUNTRIES = [
+  ["RS","Serbia"],["VN","Vietnam"],["PH","Philippines"],["NG","Nigeria"],["IN","India"],
+  ["KE","Kenya"],["BR","Brazil"],["PL","Poland"],["UA","Ukraine"],["ID","Indonesia"],
+  ["PK","Pakistan"],["EG","Egypt"],["BD","Bangladesh"],["MX","Mexico"],["CO","Colombia"],
+  ["AR","Argentina"],["TR","Turkey"],["MA","Morocco"],["ZA","South Africa"],["GH","Ghana"],
+  ["BA","Bosnia & Herzegovina"],["HR","Croatia"],["RO","Romania"],["DE","Germany"],
+  ["US","United States"],["GB","United Kingdom"],["CA","Canada"],["AU","Australia"]
+];
+
+function verdict(pid, cc){
+  switch(pid){
+    case "alignerr":
+      return cc==="US" ? {v:"open",w:"Accepts US identity documents."}
+                       : {v:"shut",w:"Requires a US driver's licence, state ID, work permit or green card. No alternative document type is accepted."};
+    case "dataann":
+      return DA_SET.includes(cc) ? {v:"open",w:"Within the supported five-country list."}
+                                 : {v:"shut",w:"Operates in the US, UK, Canada, Australia and New Zealand only."};
+    case "braintrust":
+      return REGION_SET.includes(cc) ? {v:"open",w:"Within the supported region list."}
+                                     : {v:"shut",w:"Region-limited. Note that non-EU European countries are excluded despite being in Europe."};
+    case "handshake":
+      return {v:"check",w:"Open widely, but pay bands are tiered by degree level and content you create is assigned to the platform. Read the terms first."};
+    case "appen":
+      return {v:"check",w:"Operates in 130+ countries, but the first payment cycle runs 30–45 days. Treat as background income, not urgent income."};
+    case "outlier":
+      return {v:"open",w:"Open in 61 countries. Declare the country that matches your passport — a mismatch burns your verification attempts."};
+    case "opentrain":
+      return {v:"open",w:"Trainers across 190+ countries; Stripe payouts reach 140+. Widest geographic coverage of the nine."};
+    case "mindrift":
+      return {v:"open",w:"Broad country coverage. Rates are adjusted to local cost of living, so your tier depends on the country you declare."};
+    case "meridial":
+      return {v:"open",w:"Global. Language-specialist projects pay above the base band — useful if your first language isn't English."};
+  }
+  return {v:"check",w:"Confirm directly with the platform."};
+}
+
+
+const PPP = {
+ "US":85000,"DE":72000,"AU":70000,"CA":62000,"GB":62000,"PL":50000,"RO":46000,
+ "HR":45000,"TR":43000,"AR":30000,"RS":29000,"MX":25000,"BR":22000,"BA":21000,
+ "CO":21000,"EG":18000,"UA":17000,"ZA":16000,"ID":16000,"VN":16000,"IN":11000,
+ "MA":11000,"PH":10376,"BD":9500,"GH":7500,"KE":6500,"PK":6500,"NG":6000
+};
+const TIERS=[
+ {n:"Async review",      base:70,  floor:18, w:"You send your profile, country, and a written sample. You get back a marked-up document: which platforms fit you, what to fix, and corrected application text."},
+ {n:"1:1 session · 60m", base:120, floor:30, w:"Live call. Country and ID strategy, platform shortlist, payment rails set up properly, and we walk through a real application together."},
+ {n:"Evaluator intensive · 90m", base:180, floor:45, w:"The writing skill that decides most screenings. What makes a rationale specific and falsifiable, worked through on real examples."},
+ {n:"Package · 3 sessions", base:300, floor:75, w:"Application through first payout, plus async support between calls. For people who want it done properly rather than fast."}
+];
+function ppprice(base,ppp,floor){
+  const p = base * Math.sqrt(ppp/PPP.US);
+  return Math.max(floor, Math.round(p/5)*5);
+}
+function renderPricing(cc){
+  const t=document.getElementById("tiers"), note=document.getElementById("idxnote");
+  if(!cc||!PPP[cc]){ t.innerHTML=""; note.textContent="Select a country to see your rate."; return; }
+  const idx=Math.sqrt(PPP[cc]/PPP.US);
+  const nm=COUNTRIES.find(c=>c[0]===cc)[1];
+  note.innerHTML=`<b>${nm}</b> — GDP/capita PPP int$${PPP[cc].toLocaleString()} · index <b>${idx.toFixed(2)}</b> of US`;
+  t.innerHTML=TIERS.map(x=>`<div class="tier">
+    <div class="tier-name">${x.n}</div>
+    <div class="tier-price">$${ppprice(x.base,PPP[cc],x.floor)}<small> USD</small></div>
+    <div class="tier-base">US rate $${x.base}</div>
+    <div class="tier-what">${x.w}</div>
+  </div>`).join("");
+}
+
+const sel = document.getElementById("country");
+COUNTRIES.sort((a,b)=>a[1].localeCompare(b[1])).forEach(([cc,nm])=>{
+  const o=document.createElement("option"); o.value=cc; o.textContent=nm; sel.appendChild(o);
+});
+
+const psel=document.getElementById("pcountry");
+psel.innerHTML='<option value="">Select a country…</option>';
+COUNTRIES.forEach(([cc,nm])=>{
+  if(!PPP[cc])return;
+  const o=document.createElement("option"); o.value=cc; o.textContent=nm; psel.appendChild(o);
+});
+psel.addEventListener("change",()=>renderPricing(psel.value));
+
+const LABEL={open:"Open to you",shut:"Closed",check:"Read first"};
+
+sel.addEventListener("change",()=>{
+  const cc=sel.value, rows=document.getElementById("rows"), tally=document.getElementById("tally");
+  if(!cc){
+    rows.innerHTML='<div class="row"><div><div class="row-name">Select a country to see your real options.</div></div></div>';
+    tally.textContent="Nine platforms · updated August 2026"; return;
+  }
+  let open=0,shut=0;
+  rows.innerHTML = PLATFORMS.map(p=>{
+    const r=verdict(p.id,cc);
+    if(r.v==="open")open++; if(r.v==="shut")shut++;
+    return `<div class="row">
+      <div>
+        <div class="row-name">${p.name}</div>
+        <div class="row-why">${r.w} <span style="color:#5FC9DD">${p.pay}</span> · ${p.rail}</div>
+      </div>
+      <div class="verdict v-${r.v}">${LABEL[r.v]}</div>
+    </div>`;
+  }).join("");
+  if(PPP[cc]){ psel.value=cc; renderPricing(cc); }
+  const nm = COUNTRIES.find(c=>c[0]===cc)[1];
+  tally.innerHTML = `${nm.toUpperCase()} — <b>${open} open</b> · ${shut} closed · ${9-open-shut} to read carefully first`;
+});
+</script>
+</body>
+</html>
