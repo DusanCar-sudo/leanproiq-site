@@ -58,8 +58,18 @@ a{color:inherit}
 .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
 h1{font-size:clamp(40px,7vw,78px);font-weight:700;text-transform:uppercase;max-width:16ch}
 h1 em{font-style:normal;color:var(--terra)}
-.lede{margin-top:22px;max-width:60ch;font-size:clamp(17px,2vw,20px);color:#C6D2DC}
-.lede b{color:var(--paper);font-weight:600}
+.lede{margin-top:24px;max-width:56ch;font-size:clamp(19px,2.4vw,24px);color:var(--paper);
+  font-weight:500;line-height:1.35}
+.lede-list{list-style:none;margin:20px 0 0;max-width:62ch}
+.lede-list li{position:relative;padding-left:26px;margin-bottom:11px;
+  font-size:clamp(15.5px,1.75vw,17.5px);color:#A9BAC7;line-height:1.5}
+.lede-list li:before{content:"";position:absolute;left:0;top:.72em;width:13px;height:1.5px;
+  background:var(--terra)}
+.lede-punch{margin-top:30px;font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(30px,5.4vw,52px);font-weight:700;text-transform:uppercase;
+  line-height:1.02;color:var(--paper);letter-spacing:.004em}
+.lede-punch em{font-style:normal;color:var(--cyan)}
+.lede-close{margin-top:18px;max-width:52ch;font-size:clamp(16px,1.9vw,18.5px);color:#A9BAC7}
 
 /* ---------- checker ---------- */
 .checker{background:var(--ink-2);border:1px solid rgba(95,201,221,.22);border-radius:4px;margin-top:40px;overflow:hidden}
@@ -128,6 +138,65 @@ h2{font-size:clamp(30px,4.6vw,46px);font-weight:700;text-transform:uppercase;max
 
 
 
+
+/* ---------- hero jump nav ---------- */
+.hero-jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.hero-jump a{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--cyan);text-decoration:none;border:1px solid rgba(95,201,221,.35);
+  padding:9px 15px;border-radius:3px;transition:background .15s}
+.hero-jump a:hover{background:rgba(95,201,221,.12)}
+
+/* ---------- task demo ---------- */
+.task-demo{border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:34px 0;background:#fff}
+.task-lab{background:var(--ink);color:var(--cyan);font-family:var(--mono);font-size:11px;
+  letter-spacing:.18em;text-transform:uppercase;padding:12px 20px}
+.task-prompt{padding:20px;background:var(--paper2);font-size:16.5px;border-bottom:1px solid var(--rule)}
+.task-pair{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:720px){.task-pair{grid-template-columns:1fr}}
+.task-col{padding:20px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.task-col:last-child{border-right:0}
+.task-h{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:9px;font-weight:600}
+.task-col p{font-size:15px;color:#41525F;line-height:1.5}
+.task-ask{padding:18px 20px;background:var(--ink);color:#C6D2DC;font-size:16px}
+.task-ask b{color:var(--cyan)}
+.task-ans{padding:20px;background:rgba(78,158,130,.09)}
+.task-ans p{font-size:15.5px;color:#31414D;line-height:1.55}
+
+/* ---------- fit grid ---------- */
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--rule);
+  margin:32px 0;border-radius:3px;overflow:hidden}
+@media(max-width:760px){.fit-grid{grid-template-columns:1fr}}
+.fit-col{background:var(--paper);padding:26px 24px}
+.fit-h{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+.fit-yes .fit-h{color:var(--open)}
+.fit-no .fit-h{color:var(--shut)}
+.fit-col ul{list-style:none;margin:0}
+.fit-col li{position:relative;padding-left:20px;margin-bottom:10px;font-size:15.5px;
+  color:#3D4E5C;line-height:1.48}
+.fit-col li:before{position:absolute;left:0;top:0;font-weight:700}
+.fit-yes li:before{content:"+";color:var(--open)}
+.fit-no li:before{content:"\2212";color:var(--shut)}
+
+/* ---------- warn box ---------- */
+.box-warn{background:var(--ink);color:#C6D2DC;padding:26px 28px;border-left:4px solid var(--terra);
+  border-radius:0 3px 3px 0;margin:30px 0;max-width:76ch}
+.box-warn-h{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--terra);margin-bottom:10px}
+.box-warn p{font-size:16px;line-height:1.55;margin-bottom:10px}
+.box-warn p:last-child{margin-bottom:0}
+.box-warn b{color:var(--paper)}
+
+/* ---------- pay table ---------- */
+.pay-table{width:100%;border-collapse:collapse;margin:26px 0 32px;font-size:15.5px}
+.pay-table th{background:var(--ink);color:var(--paper);font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
+  padding:12px 16px;text-align:left}
+.pay-table td{padding:14px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:#3D4E5C}
+.pay-table tr:nth-child(even) td{background:rgba(11,22,34,.03)}
+.pay-table td:nth-child(2){font-family:var(--mono);font-size:14px;color:var(--ink);white-space:nowrap}
+
 /* ---------- fairness statement ---------- */
 .fair{background:var(--ink);color:var(--paper);border-bottom:0}
 .fair h2{color:var(--paper)}
@@ -183,9 +252,140 @@ footer a:hover{text-decoration:underline}
 
 <div class="hero">
   <div class="wrap">
-    <div class="eyebrow">AI evaluation work — for the rest of the world</div>
-    <h1>Your passport is<br>the <em>real</em> application.</h1>
-    <p class="lede">Every guide to AI training work is written for someone in Ohio. It never mentions that your ID country has to match your profile country, that half the platforms silently exclude you, or that your first payout can be frozen by a rule your bank never told you about. <b>Start with what's actually open to you.</b></p>
+    <div class="eyebrow">AI evaluation work — an honest introduction</div>
+    <h1>Every job now wants<br><em>AI experience.</em></h1>
+    <p class="lede">Here is a way to get some — and be paid while you do it.</p>
+    <p class="lede-close" style="margin-top:14px;max-width:56ch">Companies training AI models pay people to judge whether the model's answers are any good. It is real work, it pays in dollars, and you can do it from anywhere. It is also badly explained, full of dead ends, and surrounded by people selling courses.</p>
+    <p class="lede-close" style="margin-top:14px;max-width:56ch"><b style="color:var(--paper)">No course here.</b> A plain explanation of what the work is, whether you'd be any good at it, what it actually pays, and which platforms will accept someone from your country.</p>
+    <div class="hero-jump">
+      <a href="#what">What the work is</a>
+      <a href="#fit">Is it for me?</a>
+      <a href="#pay">What it pays</a>
+      <a href="#where">Can I do it from here?</a>
+    </div>
+
+  </div>
+</div>
+
+<section id="what">
+  <div class="wrap">
+    <div class="kicker">Start here</div>
+    <h2>What this work actually is.</h2>
+    <div class="body-col">
+      <p>An AI model writes an answer. Somebody has to decide whether that answer was good — and explain <em>why</em>, in writing, clearly enough that an engineer can use the explanation to improve the model.</p>
+      <p>That somebody is you. The industry calls it data annotation, AI evaluation, RLHF, or model alignment. They mostly mean the same thing: <b>reading carefully and judging honestly, in writing.</b></p>
+      <p>It is not programming. It is not machine learning. Most of it is closer to marking essays than to writing software.</p>
+    </div>
+
+    <div class="task-demo">
+      <div class="task-lab">A real task, roughly</div>
+      <div class="task-prompt"><b>User asks:</b> "My landlord hasn't returned my deposit. It's been two months since I moved out. What can I do?"</div>
+      <div class="task-pair">
+        <div class="task-col">
+          <div class="task-h">Model answer A</div>
+          <p>You should contact your landlord and request the deposit. If they refuse, you may wish to seek legal advice. Many jurisdictions have tenant protection laws that may apply to your situation.</p>
+        </div>
+        <div class="task-col">
+          <div class="task-h">Model answer B</div>
+          <p>Most jurisdictions require deposits to be returned within 30 days. Send a written demand by recorded delivery stating the date you vacated and the amount owed. If unpaid after 14 days, small claims court is usually the next step — in many places you can claim up to three times the deposit.</p>
+        </div>
+      </div>
+      <div class="task-ask"><b>Your job:</b> which is better, and why — in two or three sentences an engineer can act on.</div>
+      <div class="task-ans">
+        <div class="task-h" style="color:var(--open)">What a good answer looks like</div>
+        <p>B is better on <b>actionability</b>. A tells the user to "seek legal advice" without naming a single step, which leaves them exactly where they started. B gives a sequence they can follow tomorrow. However, B states specific timeframes and a damages multiplier without noting these vary by jurisdiction — a user could act on the wrong number. B wins, but should be flagged for unqualified legal specifics.</p>
+      </div>
+    </div>
+
+    <div class="body-col">
+      <p>That is the job. Notice what it required: careful reading, a named criterion, a specific flaw, and clear writing. <b>No code, no maths, no AI background.</b></p>
+      <p>Some projects are more specialised — evaluating code, medical text, or a particular language. Those pay more. But the shape of the work stays the same.</p>
+    </div>
+  </div>
+</section>
+
+<section id="fit">
+  <div class="wrap">
+    <div class="kicker">Before you invest a weekend in this</div>
+    <h2>Whether you'd actually be any good at it.</h2>
+    <div class="body-col"><p>This suits some people enormously and makes others miserable. It is worth knowing which you are before you spend two weeks applying.</p></div>
+
+    <div class="fit-grid">
+      <div class="fit-col fit-yes">
+        <div class="fit-h">This tends to suit you if</div>
+        <ul>
+          <li>You write clearly in English and can explain <em>why</em> something is wrong, not just that it is</li>
+          <li>You have real professional depth in something — nursing, law, accounting, teaching, logistics, a trade, a language</li>
+          <li>You are comfortable working alone with no manager and no colleagues</li>
+          <li>You can follow a long, fussy instruction document exactly</li>
+          <li>You want irregular hours that fit around something else</li>
+        </ul>
+      </div>
+      <div class="fit-col fit-no">
+        <div class="fit-h">This tends not to suit you if</div>
+        <ul>
+          <li>You need steady, predictable income this month — work arrives in bursts and droughts</li>
+          <li>You want to be told what to do and get feedback as you go. Mostly you get neither</li>
+          <li>Repetitive close reading drains you. Some batches are genuinely dull</li>
+          <li>You want a job title, a team, a contract, sick pay. This is freelance, project by project</li>
+          <li>You are hoping for passive income. Every dollar here is an hour worked</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="box-warn">
+      <div class="box-warn-h">The honest version</div>
+      <p>Most people who try this stop within a month. Not because it was too hard — because they were rejected by two platforms, waited three weeks for a task that never came, and concluded it was a scam. It usually isn't a scam. It is just slow, administrative, and nobody warns you about the queue.</p>
+    </div>
+  </div>
+</section>
+
+<section id="pay">
+  <div class="wrap">
+    <div class="kicker">The numbers, without the marketing</div>
+    <h2>What it actually pays.</h2>
+    <div class="body-col">
+      <p>You will see "$50/hr" and "up to $150/hr" on landing pages. Both are technically true and both are misleading. Here is the shape of it.</p>
+    </div>
+
+    <table class="pay-table">
+      <thead><tr><th>Tier</th><th>Typical rate</th><th>What gets you there</th></tr></thead>
+      <tbody>
+        <tr><td><b>General</b></td><td>$15–25/hr</td><td>Fluent written English, careful reading. The entry pool — most competitive, most task supply.</td></tr>
+        <tr><td><b>Specialist</b></td><td>$25–45/hr</td><td>Real professional expertise, or a less common language. Where most people with a career behind them land.</td></tr>
+        <tr><td><b>Expert</b></td><td>$45–100/hr</td><td>A graduate degree, a licensed profession, or deep technical domain knowledge.</td></tr>
+        <tr><td><b>Rare</b></td><td>$100–200/hr</td><td>Medicine, law, finance, formal mathematics. Genuinely scarce, genuinely verified.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="body-col">
+      <h3>Four things the landing pages leave out</h3>
+      <p><b>Rates are adjusted by country.</b> Several platforms scale pay to local cost of living. The same task pays differently in Berlin and in Lagos.</p>
+      <p><b>Read the unit, not the number.</b> Some audio projects pay per <em>finished</em> hour of audio, not per hour you work. Contributors report an advertised $35–45 collapsing to about $9 an hour actually worked.</p>
+      <p><b>The gap between accepted and paid is the real cost.</b> Onboarding takes an afternoon. Waiting for a first project can take weeks. One documented account finished every onboarding step, was invited to a $60–120/hr role, and had earned $0.00.</p>
+      <p><b>Some evaluation phases are unpaid.</b> A minority of projects gate payment on reviewer acceptance after you have already done hours of real work. Read the payment terms in the project description before you start. Every time.</p>
+    </div>
+
+    <div class="box-warn">
+      <div class="box-warn-h">A realistic first three months</div>
+      <p>Two to four weeks applying and waiting. A first small batch of work. A first payment somewhere between $50 and $300. If it goes well, a few hundred dollars a month at ten to fifteen hours a week, rising as your quality history builds.</p>
+      <p><b>It is a second income that can grow into a first one. It is not a rescue from a bad month.</b> If you need money in ten days, this is the wrong door — and I would rather tell you that now than sell you a course.</p>
+    </div>
+  </div>
+</section>
+
+<section id="where" class="fair" style="border-bottom:1px solid rgba(255,255,255,.1)">
+  <div class="wrap">
+    <div class="kicker">If you're outside the US</div>
+    <h2>Your passport is the real application.</h2>
+    <p class="fair-lede">Every guide to this work is written for someone in Ohio.</p>
+    <ul class="lede-list">
+      <li>None of them mention that your ID country has to match your profile country.</li>
+      <li>That half these platforms quietly exclude you and never say so.</li>
+      <li>That your first payout can be frozen by a rule your own bank never told you about.</li>
+    </ul>
+    <p class="lede-punch">You don't have a skills problem.<br><em>You have a paperwork problem.</em></p>
+    <p class="lede-close">Paperwork is solvable. Start with what's actually open to you.</p>
 
     <div class="checker">
       <div class="checker-head">
@@ -203,7 +403,7 @@ footer a:hover{text-decoration:underline}
       <div class="tally" id="tally">Nine platforms · updated August 2026</div>
     </div>
   </div>
-</div>
+</section>
 
 <section>
   <div class="wrap">
