@@ -21,8 +21,10 @@ Two small edits were made to the shipped plates after the art set was delivered:
 2. **Branded social card — `assets/img/og-card.jpg` (1200×630).** The meta/twitter tags use this
    composed card, not the text-free `og.jpg` plate. It is a headless-Chrome render of a small HTML
    layout (`1200×630`) that pairs the brand mark and headline with `hero-atlas.jpg` on the right.
-   Source HTML and the Playwright script were working files in `.work/qa/` during the build
-   (`og-card.html`, `make-og.js`); to reproduce, render any page with the same CSS at 1200×630.
+   Source HTML and the Playwright script are tracked in the repository:
+   [`tools/og-card.html`](../../../tools/og-card.html) and
+   [`tools/make-og.js`](../../../tools/make-og.js). Rebuild with a local server running, then
+   `NODE_PATH=/home/dusan/.local/lib/node_modules node tools/make-og.js`.
    The plate itself (`og.jpg`, orange re-release of the hero corridor) remains in the set as an
    alternative social base.
 

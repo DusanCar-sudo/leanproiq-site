@@ -66,6 +66,7 @@ assets/
   img/favicon.svg         mark
   docs/                   preprint PDF, claims dossier
 build.py                  stdlib page builder (front matter + include + token substitution)
+tools/                    reproducible social-card renderer (og-card.html + make-og.js)
 content/                  research notes (claims dossier; not page copy)
 _archive/                 zip of the previous Lean Progress IQ site
 .work/                    local QA artifacts (ignored by git)
@@ -74,8 +75,10 @@ _archive/                 zip of the previous Lean Progress IQ site
 ## Design system
 
 Editorial-technical: bone paper `#EFEAE0`, ink `#0D0F0E`, signal orange `#E8502A`, phosphor lime
-`#C8F04B`. Type: Archivo (display), Barlow (body), Instrument Serif (editorial italic), JetBrains
-Mono (labels). Motion is CSS/IntersectionObserver only and respects `prefers-reduced-motion`.
+`#C8F04B`. Type: Archivo (display), Barlow (body), Clash Display (accent/emphasis), JetBrains Mono
+(labels). All fonts are self-hosted: Archivo, Barlow and JetBrains Mono under the SIL Open Font
+License; Clash Display by Indian Type Foundry under the Fontshare free font licence. Motion is
+CSS/IntersectionObserver only and respects `prefers-reduced-motion`.
 
 Interactive pieces:
 
