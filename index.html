@@ -3,678 +3,784 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lean Progress IQ — AI Evaluation Work for People Outside the US</title>
+<title>Lean Robotics IQ — Robot data that speaks the languages your robots meet</title>
+<meta name="description" content="Dataset localization for robot learning. We translate the instruction and annotation layer of robotics datasets — verified line by line, with a preprint's decision layer and a public audit.">
+<meta name="author" content="Dušan Milosavljević">
+<meta name="theme-color" content="#0D0F0E">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Your passport is the real application.">
-<meta property="og:description" content="Eligibility, identity and payment rails for AI evaluation work — written for people who don't live in the United States.">
-<meta property="og:site_name" content="Lean Progress IQ">
+<meta property="og:site_name" content="Lean Robotics IQ">
+<meta property="og:title" content="The instruction layer speaks English. We localize the rest.">
+<meta property="og:description" content="Robotics dataset localization, verified line by line. Instructions, annotations and scene text for robot-learning data — built on a preprint's decision layer, and an honest audit.">
+<meta property="og:image" content="assets/img/og-card.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Your passport is the real application.">
-<meta name="twitter:description" content="Which AI evaluation platforms actually accept your country — and what blocks your first payout.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230B1622'/><text x='16' y='23' font-family='sans-serif' font-size='19' font-weight='700' fill='%235FC9DD' text-anchor='middle'>L</text></svg>">
-<meta name="description" content="Most guides to AI training work are written for Americans. This one isn't. Country gates, ID mismatches, payment rails — and what the work actually is, from someone who builds the systems being evaluated.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#0B1622;
-  --ink-2:#13222F;
-  --paper:#F2EFE9;
-  --paper-2:#E7E2D8;
-  --cyan:#5FC9DD;
-  --terra:#CC785C;
-  --open:#4E9E82;
-  --shut:#C25640;
-  --muted:#7C8B98;
-  --rule:rgba(11,22,34,.14);
-  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
-body{
-  font-family:'Barlow',system-ui,sans-serif;
-  background:var(--paper); color:var(--ink);
-  font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
-h1,h2,h3,.disp{font-family:'Barlow Condensed',sans-serif;line-height:1.04;letter-spacing:.005em}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:2px}
+<meta name="twitter:title" content="The instruction layer speaks English. We localize the rest.">
+<meta name="twitter:description" content="Robotics dataset localization, verified line by line. Instructions, annotations and scene text for robot-learning data — built on a preprint's decision layer, and an honest audit.">
+<meta name="twitter:image" content="assets/img/og-card.jpg">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/favicon.svg">
+<link rel="preload" href="assets/fonts/archivo-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/barlow-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="assets/css/site.css">
 
-/* ---------- masthead ---------- */
-.top{background:var(--ink);color:var(--paper);padding:14px 0;border-bottom:3px solid var(--cyan)}
-.top .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.brand{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;letter-spacing:.16em;text-transform:uppercase}
-.brand span{color:var(--cyan)}
-.topmeta{font-family:var(--mono);font-size:11px;color:#8FA3B3;letter-spacing:.06em}
-
-/* ---------- hero ---------- */
-.hero{background:var(--ink);color:var(--paper);padding:64px 0 72px;position:relative;overflow:hidden}
-.hero:after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(90deg,rgba(95,201,221,.05) 0 1px,transparent 1px 68px)}
-.hero .wrap{position:relative;z-index:1}
-.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px}
-h1{font-size:clamp(40px,7vw,78px);font-weight:700;text-transform:uppercase;max-width:16ch}
-h1 em{font-style:normal;color:var(--terra)}
-.lede{margin-top:24px;max-width:56ch;font-size:clamp(19px,2.4vw,24px);color:var(--paper);
-  font-weight:500;line-height:1.35}
-.lede-list{list-style:none;margin:20px 0 0;max-width:62ch}
-.lede-list li{position:relative;padding-left:26px;margin-bottom:11px;
-  font-size:clamp(15.5px,1.75vw,17.5px);color:#A9BAC7;line-height:1.5}
-.lede-list li:before{content:"";position:absolute;left:0;top:.72em;width:13px;height:1.5px;
-  background:var(--terra)}
-.lede-punch{margin-top:30px;font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(30px,5.4vw,52px);font-weight:700;text-transform:uppercase;
-  line-height:1.02;color:var(--paper);letter-spacing:.004em}
-.lede-punch em{font-style:normal;color:var(--cyan)}
-.lede-close{margin-top:18px;max-width:52ch;font-size:clamp(16px,1.9vw,18.5px);color:#A9BAC7}
-
-/* ---------- checker ---------- */
-.checker{background:var(--ink-2);border:1px solid rgba(95,201,221,.22);border-radius:4px;margin-top:40px;overflow:hidden}
-.checker-head{padding:20px 22px;border-bottom:1px solid rgba(95,201,221,.18);display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
-.checker-head label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px}
-select{
-  font-family:'Barlow',sans-serif;font-size:17px;font-weight:600;
-  background:var(--ink);color:var(--paper);border:1px solid rgba(95,201,221,.35);
-  border-radius:3px;padding:10px 14px;min-width:230px;cursor:pointer
-}
-.checker-note{font-size:14px;color:var(--muted);flex:1;min-width:200px}
-.rows{padding:6px 0}
-.row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
-  padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.055)}
-.row:last-child{border-bottom:0}
-.row-name{font-weight:600;font-size:16.5px}
-.row-why{font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.45}
-.verdict{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
-  padding:5px 10px;border-radius:3px;white-space:nowrap;font-weight:600}
-.v-open{background:rgba(78,158,130,.16);color:#7FC7AC;border:1px solid rgba(78,158,130,.4)}
-.v-shut{background:rgba(194,86,64,.14);color:#E08A72;border:1px solid rgba(194,86,64,.4)}
-.v-check{background:rgba(204,120,92,.13);color:var(--terra);border:1px solid rgba(204,120,92,.38)}
-.tally{padding:16px 22px;background:rgba(0,0,0,.22);font-family:var(--mono);font-size:12.5px;color:#9DB0BE;letter-spacing:.04em}
-.tally b{color:var(--cyan)}
-
-/* ---------- sections ---------- */
-section{padding:76px 0;border-bottom:1px solid var(--rule)}
-.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--terra);margin-bottom:14px}
-h2{font-size:clamp(30px,4.6vw,46px);font-weight:700;text-transform:uppercase;max-width:20ch;margin-bottom:22px}
-.body-col{max-width:68ch}
-.body-col p{margin-bottom:18px}
-.body-col p:last-child{margin-bottom:0}
-.body-col b{font-weight:600}
-
-.walls{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;margin-top:44px;background:var(--rule)}
-.wall{background:var(--paper);padding:28px 24px}
-.wall-n{font-family:var(--mono);font-size:11px;color:var(--terra);letter-spacing:.16em;margin-bottom:12px}
-.wall h3{font-size:23px;font-weight:600;text-transform:uppercase;margin-bottom:10px}
-.wall p{font-size:15.5px;color:#3D4E5C;line-height:1.55}
-
-.two{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
-@media(max-width:820px){.two{grid-template-columns:1fr;gap:36px}}
-
-.credbox{background:var(--ink);color:var(--paper);padding:34px 32px;border-left:4px solid var(--cyan);border-radius:3px}
-.credbox h3{font-size:21px;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;font-weight:600}
-.credbox ul{list-style:none}
-.credbox li{padding:9px 0 9px 20px;position:relative;font-size:15.5px;color:#C6D2DC;border-bottom:1px solid rgba(255,255,255,.07)}
-.credbox li:last-child{border-bottom:0}
-.credbox li:before{content:"";position:absolute;left:0;top:17px;width:7px;height:1.5px;background:var(--terra)}
-.credbox li b{color:var(--paper);font-weight:600}
-
-.cta{background:var(--ink);color:var(--paper);border-bottom:0}
-.cta h2{color:var(--paper)}
-.cta .body-col p{color:#C6D2DC}
-.btn{display:inline-block;background:var(--cyan);color:var(--ink);font-family:'Barlow Condensed',sans-serif;
-  font-weight:700;font-size:19px;letter-spacing:.1em;text-transform:uppercase;
-  padding:16px 34px;border-radius:3px;text-decoration:none;margin-top:26px;transition:background .15s}
-.btn:hover{background:#7FD8E8}
-.btn-2{background:transparent;color:var(--cyan);border:1px solid rgba(95,201,221,.5);margin-left:12px}
-.btn-2:hover{background:rgba(95,201,221,.1)}
-@media(max-width:560px){.btn-2{margin-left:0;margin-top:12px}}
-
-.honest{background:var(--paper-2);padding:30px 28px;border-radius:3px;margin-top:40px;font-size:15.5px;color:#3D4E5C;max-width:70ch}
-.honest strong{display:block;font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--ink);margin-bottom:10px}
-
-
-
-
-/* ---------- hero jump nav ---------- */
-.hero-jump{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
-.hero-jump a{font-family:var(--mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--cyan);text-decoration:none;border:1px solid rgba(95,201,221,.35);
-  padding:9px 15px;border-radius:3px;transition:background .15s}
-.hero-jump a:hover{background:rgba(95,201,221,.12)}
-
-/* ---------- task demo ---------- */
-.task-demo{border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin:34px 0;background:#fff}
-.task-lab{background:var(--ink);color:var(--cyan);font-family:var(--mono);font-size:11px;
-  letter-spacing:.18em;text-transform:uppercase;padding:12px 20px}
-.task-prompt{padding:20px;background:var(--paper2);font-size:16.5px;border-bottom:1px solid var(--rule)}
-.task-pair{display:grid;grid-template-columns:1fr 1fr}
-@media(max-width:720px){.task-pair{grid-template-columns:1fr}}
-.task-col{padding:20px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.task-col:last-child{border-right:0}
-.task-h{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--terra);margin-bottom:9px;font-weight:600}
-.task-col p{font-size:15px;color:#41525F;line-height:1.5}
-.task-ask{padding:18px 20px;background:var(--ink);color:#C6D2DC;font-size:16px}
-.task-ask b{color:var(--cyan)}
-.task-ans{padding:20px;background:rgba(78,158,130,.09)}
-.task-ans p{font-size:15.5px;color:#31414D;line-height:1.55}
-
-/* ---------- fit grid ---------- */
-.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--rule);
-  margin:32px 0;border-radius:3px;overflow:hidden}
-@media(max-width:760px){.fit-grid{grid-template-columns:1fr}}
-.fit-col{background:var(--paper);padding:26px 24px}
-.fit-h{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
-.fit-yes .fit-h{color:var(--open)}
-.fit-no .fit-h{color:var(--shut)}
-.fit-col ul{list-style:none;margin:0}
-.fit-col li{position:relative;padding-left:20px;margin-bottom:10px;font-size:15.5px;
-  color:#3D4E5C;line-height:1.48}
-.fit-col li:before{position:absolute;left:0;top:0;font-weight:700}
-.fit-yes li:before{content:"+";color:var(--open)}
-.fit-no li:before{content:"\2212";color:var(--shut)}
-
-/* ---------- warn box ---------- */
-.box-warn{background:var(--ink);color:#C6D2DC;padding:26px 28px;border-left:4px solid var(--terra);
-  border-radius:0 3px 3px 0;margin:30px 0;max-width:76ch}
-.box-warn-h{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;
-  text-transform:uppercase;letter-spacing:.1em;color:var(--terra);margin-bottom:10px}
-.box-warn p{font-size:16px;line-height:1.55;margin-bottom:10px}
-.box-warn p:last-child{margin-bottom:0}
-.box-warn b{color:var(--paper)}
-
-/* ---------- pay table ---------- */
-.pay-table{width:100%;border-collapse:collapse;margin:26px 0 32px;font-size:15.5px}
-.pay-table th{background:var(--ink);color:var(--paper);font-family:'Barlow Condensed',sans-serif;
-  font-size:16px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;
-  padding:12px 16px;text-align:left}
-.pay-table td{padding:14px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:#3D4E5C}
-.pay-table tr:nth-child(even) td{background:rgba(11,22,34,.03)}
-.pay-table td:nth-child(2){font-family:var(--mono);font-size:14px;color:var(--ink);white-space:nowrap}
-
-/* ---------- fairness statement ---------- */
-.fair{background:var(--ink);color:var(--paper);border-bottom:0}
-.fair h2{color:var(--paper)}
-.fair .kicker{color:var(--cyan)}
-.fair-lede{max-width:64ch;font-size:clamp(18px,2.1vw,21px);color:#C6D2DC;line-height:1.55;margin-bottom:30px}
-.fair-lede b{color:var(--paper);font-weight:600}
-.fair-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;
-  background:rgba(255,255,255,.12);margin-top:38px;border-radius:3px;overflow:hidden}
-.fair-card{background:var(--ink-2);padding:28px 26px}
-.fair-card h3{font-size:20px;text-transform:uppercase;font-weight:600;color:var(--cyan);margin-bottom:12px}
-.fair-card p{font-size:15.5px;color:#C0CDD8;line-height:1.55}
-.pullquote{border-left:3px solid var(--terra);padding:4px 0 4px 22px;margin:32px 0;
-  font-family:'Barlow Condensed',sans-serif;font-size:clamp(22px,3vw,30px);font-weight:500;
-  line-height:1.25;color:var(--paper);max-width:26ch}
-
-/* ---------- pricing ---------- */
-.priceblock{margin-top:40px;border:1px solid var(--rule);border-radius:4px;overflow:hidden;background:#fff}
-.priceblock-head{padding:20px 22px;background:var(--paper-2);border-bottom:1px solid var(--rule);
-  display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
-.priceblock-head label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--terra);margin-bottom:8px}
-select.light{background:#fff;color:var(--ink);border:1px solid var(--rule)}
-.idxnote{font-family:var(--mono);font-size:12px;color:#5C6E7C;flex:1;min-width:220px}
-.idxnote b{color:var(--ink)}
-.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-.tier{padding:24px 22px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
-.tier:last-child{border-right:0}
-.tier-name{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:600;
-  text-transform:uppercase;margin-bottom:6px}
-.tier-price{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:700;
-  color:var(--ink);line-height:1;margin-bottom:4px}
-.tier-price small{font-size:17px;color:var(--muted);font-weight:500}
-.tier-base{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px}
-.tier-what{font-size:14.5px;color:#3D4E5C;line-height:1.5}
-.formula{padding:22px;background:var(--ink);color:#B9C7D3;font-family:var(--mono);
-  font-size:13px;line-height:1.7}
-.formula b{color:var(--cyan)}
-.formula .eq{display:block;margin:10px 0;color:var(--paper);font-size:14px}
-footer{background:var(--ink);color:#8FA3B3;padding:44px 0;font-size:14px}
-footer a{color:var(--cyan);text-decoration:none}
-footer a:hover{text-decoration:underline}
-.f-row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-</style>
 </head>
-<body>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<div class="scrollline" aria-hidden="true"><span></span></div>
+<header class="top" data-header>
+  <div class="shell top__inner">
+    <a class="brand" href="index.html" aria-label="Lean Robotics IQ — home">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect width="32" height="32" fill="currentColor" opacity=".0"/>
+        <rect x="6" y="6" width="9" height="9" fill="currentColor"/>
+        <rect x="17" y="6" width="9" height="9" fill="currentColor"/>
+        <rect x="6" y="17" width="9" height="9" fill="currentColor"/>
+        <rect x="17" y="15" width="9" height="9" fill="var(--signal)"/>
+      </svg>
+      <span class="brand__type">Lean Robotics <em>IQ</em></span>
+    </a>
 
-<header class="top">
-  <div class="wrap">
-    <div class="brand">Lean Progress <span>IQ</span></div>
-    <div class="topmeta">DA NANG, VN &nbsp;·&nbsp; ZRENJANIN, RS</div>
+    <nav class="top__nav" aria-label="Primary">
+      <a href="index.html#problem" data-nav="problem">Problem</a>
+      <a href="datasets.html" data-nav="work">The work</a>
+      <a href="method.html" data-nav="method">Method</a>
+      <a href="index.html#evidence" data-nav="evidence">Evidence</a>
+      <a href="index.html#languages" data-nav="languages">Languages</a>
+    </nav>
+
+    <div class="top__actions">
+      <a class="btn btn--signal btn--sm" href="index.html#contact">Start a pilot <span aria-hidden="true">→</span></a>
+      <button class="top__burger" type="button" aria-expanded="false" aria-controls="mobile-nav" data-burger>
+        <span class="top__burger-label">Menu</span>
+        <span class="top__burger-box" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
   </div>
 </header>
+  <div class="mobilenav" id="mobile-nav" data-mobilenav hidden>
+    <nav class="shell mobilenav__inner" aria-label="Mobile">
+      <a href="index.html#problem">The English-only default</a>
+      <a href="datasets.html">The work</a>
+      <a href="method.html">Method — recursive learning &amp; the gate</a>
+      <a href="index.html#evidence">Evidence — the audit</a>
+      <a href="index.html#languages">Languages &amp; engagement</a>
+      <a class="mobilenav__cta" href="index.html#contact">Start a pilot →</a>
+      <p class="mobilenav__meta">Praktess Research · Aura Code Project<br>Da Nang, Vietnam · aura@leanproiq.com</p>
+    </nav>
+  </div>
 
-<div class="hero">
-  <div class="wrap">
-    <div class="eyebrow">AI evaluation work — an honest introduction</div>
-    <h1>Every job now wants<br><em>AI experience.</em></h1>
-    <p class="lede">Here is a way to get some — and be paid while you do it.</p>
-    <p class="lede-close" style="margin-top:14px;max-width:56ch">Companies training AI models pay people to judge whether the model's answers are any good. It is real work, it pays in dollars, and you can do it from anywhere. It is also badly explained, full of dead ends, and surrounded by people selling courses.</p>
-    <p class="lede-close" style="margin-top:14px;max-width:56ch"><b style="color:var(--paper)">No course here.</b> A plain explanation of what the work is, whether you'd be any good at it, what it actually pays, and which platforms will accept someone from your country.</p>
-    <div class="hero-jump">
-      <a href="#what">What the work is</a>
-      <a href="#fit">Is it for me?</a>
-      <a href="#pay">What it pays</a>
-      <a href="#where">Can I do it from here?</a>
+
+<main id="main">
+<section class="hero noise">
+  <div class="shell">
+    <div class="hero__top">
+      <p class="eyebrow hero__eyebrow reveal">Lean Robotics IQ · Dataset localization for robot learning</p>
+      <h1 class="display-xl hero__title reveal" style="--d:80ms">
+        <span class="line">The instruction layer</span>
+        <span class="line line--muted">speaks English.</span>
+        <span class="line line--signal">We localize</span>
+        <span class="line line--serif">the rest.</span>
+      </h1>
     </div>
 
+    <div class="hero__lower">
+      <div class="hero__copy">
+        <p class="lede hero__lede reveal" style="--d:160ms">The open robot corpora we reviewed document their instructions, annotations and scene descriptions in English. That is fine until the robot, the operator and the reviewer do not work in English. We translate the data layer — not the model — and we verify every line.</p>
+        <div class="hero__cta reveal" style="--d:240ms">
+          <a class="btn btn--signal" href="#contact">Start a pilot slice <span aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="method.html">Read the method</a>
+        </div>
+        <div class="hero__meta reveal" style="--d:320ms">
+          <span><b>FOUNDED</b> 2026 · PRAKTESS RESEARCH</span>
+          <span><b>FOUNDING LINES</b> EN → SR / HR / BS / VI</span>
+          <span><b>CONTACT</b> AURA@LEANPROIQ.COM</span>
+        </div>
+      </div>
+
+      <div class="hero__art reveal" style="--d:220ms">
+        <figure class="plate plate--tall">
+          <div class="plate__img">
+            <img src="assets/img/art/hero-atlas.jpg" alt="A bone-and-ink duotone plate: a humanoid robot standing in a narrow archive corridor lined with card-catalogue shelves, lit from above." width="1024" height="1280" fetchpriority="high" decoding="async">
+          </div>
+          <figcaption class="plate__fig">
+            <span><b>PLATE 01</b> — THE ATLAS OF UNTRANSLATED DATA</span>
+            <span>SDXS·512 / ON-DEVICE</span>
+          </figcaption>
+        </figure>
+        <span class="plate__stamp" aria-hidden="true">ACC. 2026.001</span>
+        <p class="hero__art-note"><span>Generated locally. Imperfect on purpose.</span><span>No cloud imagery used.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="tape" aria-label="Language lines and project facts">
+  <div class="tape__track">
+    <div class="tape__group">
+      <span class="tape__item">EN → SR</span><span class="tape__item">EN → HR</span><span class="tape__item">EN → BS</span><span class="tape__item">EN → VI</span><span class="tape__item">Verified, not guessed</span><span class="tape__item">Verifier on every line</span><span class="tape__item">Praktess Research</span><span class="tape__item">Aura Code Project</span><span class="tape__item">Preprint · 2025</span><span class="tape__item">No cloud in the loop</span>
+    </div>
+    <div class="tape__group" aria-hidden="true">
+      <span class="tape__item">EN → SR</span><span class="tape__item">EN → HR</span><span class="tape__item">EN → BS</span><span class="tape__item">EN → VI</span><span class="tape__item">Verified, not guessed</span><span class="tape__item">Verifier on every line</span><span class="tape__item">Praktess Research</span><span class="tape__item">Aura Code Project</span><span class="tape__item">Preprint · 2025</span><span class="tape__item">No cloud in the loop</span>
+    </div>
   </div>
 </div>
 
-<section id="what">
-  <div class="wrap">
-    <div class="kicker">Start here</div>
-    <h2>What this work actually is.</h2>
-    <div class="body-col">
-      <p>An AI model writes an answer. Somebody has to decide whether that answer was good — and explain <em>why</em>, in writing, clearly enough that an engineer can use the explanation to improve the model.</p>
-      <p>That somebody is you. The industry calls it data annotation, AI evaluation, RLHF, or model alignment. They mostly mean the same thing: <b>reading carefully and judging honestly, in writing.</b></p>
-      <p>It is not programming. It is not machine learning. Most of it is closer to marking essays than to writing software.</p>
-    </div>
-
-    <div class="task-demo">
-      <div class="task-lab">A real task, roughly</div>
-      <div class="task-prompt"><b>User asks:</b> "My landlord hasn't returned my deposit. It's been two months since I moved out. What can I do?"</div>
-      <div class="task-pair">
-        <div class="task-col">
-          <div class="task-h">Model answer A</div>
-          <p>You should contact your landlord and request the deposit. If they refuse, you may wish to seek legal advice. Many jurisdictions have tenant protection laws that may apply to your situation.</p>
-        </div>
-        <div class="task-col">
-          <div class="task-h">Model answer B</div>
-          <p>Most jurisdictions require deposits to be returned within 30 days. Send a written demand by recorded delivery stating the date you vacated and the amount owed. If unpaid after 14 days, small claims court is usually the next step — in many places you can claim up to three times the deposit.</p>
-        </div>
+<section class="proof" aria-label="Numbers from the preprint's deployment audit">
+  <div class="shell">
+    <div class="proof__grid">
+      <div class="proof__item reveal">
+        <div class="proof__num"><span data-count="1049656173">1,049,656,173</span></div>
+        <p class="proof__label">Tokens audited in the deployment study</p>
       </div>
-      <div class="task-ask"><b>Your job:</b> which is better, and why — in two or three sentences an engineer can act on.</div>
-      <div class="task-ans">
-        <div class="task-h" style="color:var(--open)">What a good answer looks like</div>
-        <p>B is better on <b>actionability</b>. A tells the user to "seek legal advice" without naming a single step, which leaves them exactly where they started. B gives a sequence they can follow tomorrow. However, B states specific timeframes and a damages multiplier without noting these vary by jurisdiction — a user could act on the wrong number. B wins, but should be flagged for unqualified legal specifics.</p>
+      <div class="proof__item reveal" style="--d:70ms">
+        <div class="proof__num"><span data-count="1225">1,225</span> <small>episodes</small></div>
+        <p class="proof__label">Across 20 project stores, Sept–Oct 2026</p>
+      </div>
+      <div class="proof__item reveal" style="--d:140ms">
+        <div class="proof__num proof__num--signal">0 <small>/ 153</small></div>
+        <p class="proof__label">Cheap-tier attempts observed in instrumented decisions</p>
+      </div>
+      <div class="proof__item reveal" style="--d:210ms">
+        <div class="proof__num proof__num--lime"><span data-count="143">143</span> <small>/ 143</small></div>
+        <p class="proof__label">Distinct pattern keys — the gate was unreachable, not wrong</p>
       </div>
     </div>
+    <p class="proof__caption mono">Every number above comes from the preprint's deployment audit. None of them is a sales metric. <a href="index.html#evidence">Read the evidence ↓</a></p>
+  </div>
+</section>
 
-    <div class="body-col">
-      <p>That is the job. Notice what it required: careful reading, a named criterion, a specific flaw, and clear writing. <b>No code, no maths, no AI background.</b></p>
-      <p>Some projects are more specialised — evaluating code, medical text, or a particular language. Those pay more. But the shape of the work stays the same.</p>
+<section class="section" id="problem">
+  <div class="shell">
+    <div class="sec-head">
+      <div class="sec-head__main reveal">
+        <div class="sec-head__index"><span>01</span> The problem <span>The English-only default</span></div>
+        <h2 class="display-l">The instruction layer <span class="serif">defaults to English</span>. The deployment doesn't.</h2>
+      </div>
+      <div class="sec-head__aside reveal" style="--d:100ms">
+        <p>Robot policies are conditioned on language. That language is written once, in English, by whoever collected the data — and then inherited by every model, lab and factory downstream.</p>
+      </div>
+    </div>
+
+    <div class="problem__grid">
+      <div class="problem__copy reveal">
+        <p class="lede">A vision-language-action model learns from triples: an observation, an instruction, an action. The observation is a camera. The action is a robot. The instruction is a sentence — and in the public corpus, that sentence is almost always English.</p>
+        <div class="prose">
+          <p>Open X-Embodiment pools 60 robot datasets and more than a million trajectories; DROID contributes 76,000 trajectories across 564 scenes; RT-1 carries 130,000 episodes; BridgeData V2 adds 60,000 more. The documented annotation examples are English — while the index that pools them for the field records annotation <em>style</em> (templated, natural, none), and has no locale field at all. In the current index, about a third of the pooled datasets carry no language annotations yet.</p>
+          <p>When a policy lands in a kitchen in Da Nang or a warehouse in Novi Sad, there are only three options: fine-tune the language away, keep a translation layer between operator and machine, or accept that the robot only understands the people who collected its data. None of those is free.</p>
+        </div>
+        <blockquote class="pull">
+          <p>“An instruction is not a sentence. It is a specification of an action. Translate the words and miss the referent, and you have changed the task.”</p>
+          <cite>Working note · dataset localization protocol, v0.4</cite>
+        </blockquote>
+      </div>
+
+      <div class="coverage reveal" style="--d:120ms" aria-label="Illustrative language coverage of public robot datasets">
+        <div class="coverage__head">
+          <span class="coverage__title">Public dataset cards · language audit</span>
+          <span class="coverage__sub">Oct 2026 · illustrative</span>
+        </div>
+        <div class="coverage__row">
+          <div class="coverage__name">Open X-Embodiment <small>60 datasets · 1M+ trajectories</small></div>
+          <div class="coverage__dots" aria-label="English only">
+            <span class="coverage__dot coverage__dot--on">EN</span><span class="coverage__dot">SR</span><span class="coverage__dot">DE</span><span class="coverage__dot">VI</span><span class="coverage__dot">ES</span><span class="coverage__dot">JA</span>
+          </div>
+        </div>
+        <div class="coverage__row">
+          <div class="coverage__name">DROID <small>76k trajectories · 564 scenes</small></div>
+          <div class="coverage__dots" aria-label="English only">
+            <span class="coverage__dot coverage__dot--on">EN</span><span class="coverage__dot">SR</span><span class="coverage__dot">DE</span><span class="coverage__dot">VI</span><span class="coverage__dot">ES</span><span class="coverage__dot">JA</span>
+          </div>
+        </div>
+        <div class="coverage__row">
+          <div class="coverage__name">RT-1 <small>130k episodes · 700+ tasks</small></div>
+          <div class="coverage__dots" aria-label="English only">
+            <span class="coverage__dot coverage__dot--on">EN</span><span class="coverage__dot">SR</span><span class="coverage__dot">DE</span><span class="coverage__dot">VI</span><span class="coverage__dot">ES</span><span class="coverage__dot">JA</span>
+          </div>
+        </div>
+        <div class="coverage__row">
+          <div class="coverage__name">BridgeData V2 <small>60k trajectories · 24 environments</small></div>
+          <div class="coverage__dots" aria-label="English only">
+            <span class="coverage__dot coverage__dot--on">EN</span><span class="coverage__dot">SR</span><span class="coverage__dot">DE</span><span class="coverage__dot">VI</span><span class="coverage__dot">ES</span><span class="coverage__dot">JA</span>
+          </div>
+        </div>
+        <div class="coverage__row">
+          <div class="coverage__name">LIBERO <small>130 tasks · 50 demos each</small></div>
+          <div class="coverage__dots" aria-label="English only">
+            <span class="coverage__dot coverage__dot--on">EN</span><span class="coverage__dot">SR</span><span class="coverage__dot">DE</span><span class="coverage__dot">VI</span><span class="coverage__dot">ES</span><span class="coverage__dot">JA</span>
+          </div>
+        </div>
+        <div class="coverage__legend">
+          <span><i style="background:var(--signal)"></i>Documented</span>
+          <span><i style="border:1px solid var(--rule-ink)"></i>None found</span>
+          <span><i style="background:rgba(232,80,42,.22);border:1px solid rgba(232,80,42,.5)"></i>Partial / community</span>
+        </div>
+        <p class="coverage__foot">Illustrative reading of public dataset cards and indexes, dated 22 Oct 2026 — not a language census. Where a source does not state a language, we say “English examples” rather than “English only.” Sources and confidence labels are in the <a href="method.html#references">claims dossier</a>. Absence of evidence is not evidence of absence.</p>
+      </div>
+    </div>
+
+    <div class="modes reveal">
+      <div class="mode">
+        <span class="mode__num">MODE 01</span>
+        <h3 class="h3">Referent drift</h3>
+        <p>The blue block is masculine in one language and feminine in another. Pronouns, agreement and noun-class systems have to resolve to the same object in the scene — not merely the same dictionary entry.</p>
+      </div>
+      <div class="mode">
+        <span class="mode__num">MODE 02</span>
+        <h3 class="h3">Alignment loss</h3>
+        <p>A translated string must stay keyed to the same timestep, subtask and action segment. A paraphrase that shifts a boundary corrupts the label even when the sentence reads perfectly.</p>
+      </div>
+      <div class="mode">
+        <span class="mode__num">MODE 03</span>
+        <h3 class="h3">Affordance mismatch</h3>
+        <p>“Put it in the microwave” carries a kitchen layout, a button and a height. Localized data has to describe the affordance the robot will actually meet, not the one in the original scene.</p>
+      </div>
+    </div>
+
+    <div class="callout reveal" style="margin-top:clamp(38px,5vw,60px)">
+      <span class="callout__tag">Prior art, acknowledged</span>
+      <p><b>Translation for robot learning is not a blank field.</b> LIBERO has been translated into ten languages for evaluation, and VLA success dropped 30–50% under non-English instructions (ACL 2026). A 2026 Greek VLA study found machine translation alone recovered about two fifths of English performance — and that policies overfit the translator's phrasing; seven phrasings per task roughly halved that penalty. Community datasets translate individual tasks. What we could not find is dataset-side localization in the native format, with per-episode provenance and an independent verifier report. That is the line we build — and we date-stamp the absence claim instead of calling it a first. <a href="method.html#references">Read the sources <span aria-hidden="true">→</span></a></p>
     </div>
   </div>
 </section>
 
-<section id="fit">
-  <div class="wrap">
-    <div class="kicker">Before you invest a weekend in this</div>
-    <h2>Whether you'd actually be any good at it.</h2>
-    <div class="body-col"><p>This suits some people enormously and makes others miserable. It is worth knowing which you are before you spend two weeks applying.</p></div>
+<section class="section section--paper-2" id="work">
+  <div class="shell">
+    <div class="sec-head">
+      <div class="sec-head__main reveal">
+        <div class="sec-head__index"><span>02</span> The work <span>The deliverable</span></div>
+        <h2 class="display-l">We localize the layer between the camera and the action.</h2>
+      </div>
+      <div class="sec-head__aside reveal" style="--d:100ms">
+        <p>Four artifact families, one rule: the target-language text has to mean the same action to a reader who has never seen the source scene.</p>
+      </div>
+    </div>
 
-    <div class="fit-grid">
-      <div class="fit-col fit-yes">
-        <div class="fit-h">This tends to suit you if</div>
+    <div class="deliver__grid reveal">
+      <article class="dcard">
+        <span class="dcard__no">01 / INSTRUCTION</span>
+        <h3 class="h3">Instructions &amp; goals</h3>
+        <p>Natural-language task instructions, subtask decompositions and goal specifications — the text a policy conditions on.</p>
+        <div class="dcard__tags"><span>task text</span><span>subtasks</span><span>goal spec</span></div>
+      </article>
+      <article class="dcard">
+        <span class="dcard__no">02 / ANNOTATION</span>
+        <h3 class="h3">Annotations &amp; captions</h3>
+        <p>Object and scene descriptions, success criteria, failure notes and preference labels. Same referent, target language.</p>
+        <div class="dcard__tags"><span>captions</span><span>success criteria</span><span>failure notes</span></div>
+      </article>
+      <article class="dcard">
+        <span class="dcard__no">03 / DIALOGUE</span>
+        <h3 class="h3">Dialogue &amp; operator scripts</h3>
+        <p>Teleoperation speech, human–robot interaction transcripts, clarifications and corrections, with speaker and turn structure preserved.</p>
+        <div class="dcard__tags"><span>teleop speech</span><span>turn-taking</span><span>corrections</span></div>
+      </article>
+      <article class="dcard">
+        <span class="dcard__no">04 / EVALUATION</span>
+        <h3 class="h3">Eval &amp; curriculum text</h3>
+        <p>Benchmark task lists, rubrics, safety prompts and curriculum descriptions for evaluation in the target language.</p>
+        <div class="dcard__tags"><span>benchmarks</span><span>rubrics</span><span>safety prompts</span></div>
+      </article>
+    </div>
+
+    <div class="work__foot reveal">
+      <div class="work__formats" aria-label="Supported dataset formats">
+        <span>RLDS</span><span>Open X-Embodiment</span><span>LeRobot</span><span>HDF5</span><span>JSONL</span><span>Parquet</span><span>TFDS</span>
+      </div>
+      <p class="work__note">Every delivery ships with a verifier report and a provenance ledger: which line, which reviewer, which decision, which evidence. <a class="link-arrow" href="datasets.html">Anatomy of a delivery <span aria-hidden="true">→</span></a></p>
+    </div>
+  </div>
+</section>
+
+<section class="section section--ink lab noise" id="demo">
+  <div class="shell">
+    <div class="sec-head">
+      <div class="sec-head__main reveal">
+        <div class="sec-head__index"><span>03</span> The localization line <span>Sample, not a dataset</span></div>
+        <h2 class="display-l">The sentence survives the move. <span class="serif">The action spine</span> is preserved.</h2>
+      </div>
+      <div class="sec-head__aside reveal" style="--d:100ms">
+        <p>One manipulation instruction, five localizations, and the decision a competent translator has to make — the part a dictionary cannot see.</p>
+      </div>
+    </div>
+
+    <div class="lab__grid">
+      <div class="lab__intro reveal">
+        <p class="lede measure">A single instruction from a manipulation-style dataset: pick up the blue block, place it in the red bowl.</p>
+        <div class="prose" style="max-width:52ch">
+          <p>Each localization carries the same action spine — <strong>reach → grasp → lift → move → place</strong> — keyed to the same segment boundaries. The tabs are not a translation memory. They show the failure modes we are paid to catch.</p>
+        </div>
+        <figure class="lab__fig">
+          <img src="assets/img/art/lang.jpg" alt="A bone-and-ink duotone plate of a boxy machine covered in paper glyphs, with a thin mechanical arm reaching out of frame." width="1000" height="1000" loading="lazy" decoding="async">
+          <figcaption>Plate 04 — the language machine. Generated on-device, one step, no retouching of its mistakes.</figcaption>
+        </figure>
+      </div>
+
+      <div class="lab__panel reveal" style="--d:120ms" data-tabs>
+        <div class="lab__tabs" role="tablist" aria-label="Localized instructions">
+          <button class="lab__tab" role="tab" id="tab-en" aria-controls="pane-en" aria-selected="true" type="button">EN<small>source</small></button>
+          <button class="lab__tab" role="tab" id="tab-sr" aria-controls="pane-sr" aria-selected="false" tabindex="-1" type="button">SR<small>serbian</small></button>
+          <button class="lab__tab" role="tab" id="tab-de" aria-controls="pane-de" aria-selected="false" tabindex="-1" type="button">DE<small>german</small></button>
+          <button class="lab__tab" role="tab" id="tab-vi" aria-controls="pane-vi" aria-selected="false" tabindex="-1" type="button">VI<small>vietnamese</small></button>
+          <button class="lab__tab" role="tab" id="tab-es" aria-controls="pane-es" aria-selected="false" tabindex="-1" type="button">ES<small>spanish</small></button>
+          <button class="lab__tab" role="tab" id="tab-ja" aria-controls="pane-ja" aria-selected="false" tabindex="-1" type="button">JA<small>japanese</small></button>
+        </div>
+
+        <div class="langpanes">
+          <div class="langpane" role="tabpanel" id="pane-en" aria-labelledby="tab-en">
+            <div class="langpane__meta"><span>SOURCE · EN · RT-STYLE SCHEMA</span><b>BASELINE</b></div>
+            <p class="langpane__src"><b>source string</b>“Pick up the blue block and place it in the red bowl.”</p>
+            <p class="langpane__tgt">Pick up the blue block and place it in the red bowl.</p>
+            <p class="langpane__gloss">Two clauses, two referents: blue block (grasp) and red bowl (destination).</p>
+            <div class="langpane__note">
+              <b>Spine</b><span>reach(blue block) → grasp → lift → move(red bowl) → place</span>
+              <b>Decision</b><span>No translation decision. This is the source against which every target is alignment-checked.</span>
+            </div>
+          </div>
+
+          <div class="langpane" role="tabpanel" id="pane-sr" aria-labelledby="tab-sr" hidden>
+            <div class="langpane__meta"><span>EN → SR · SERBIAN</span><b>PILOT LINE</b></div>
+            <p class="langpane__src"><b>source string</b>“Pick up the blue block and place it in the red bowl.”</p>
+            <p class="langpane__tgt" lang="sr-Latn">Podigni plavu kocku i stavi je u crvenu činiju.</p>
+            <p class="langpane__gloss">Pick up the blue block and put it into the red bowl.</p>
+            <div class="langpane__note">
+              <b>Grammar</b><span>“Kocka” (block) is feminine, so the adjective is <em>plavu</em> and the clitic is <em>je</em>. A noun-agnostic template produces broken agreement and an ambiguous referent.</span>
+              <b>Spine</b><span>Segment boundaries unchanged; the two verb clauses map one-to-one.</span>
+              <b>Review</b><span>Native reviewer, two passes; one back-translation spot check per 50 strings.</span>
+            </div>
+          </div>
+
+          <div class="langpane" role="tabpanel" id="pane-de" aria-labelledby="tab-de" hidden>
+            <div class="langpane__meta"><span>EN → DE · GERMAN</span><b>OPENING LINE</b></div>
+            <p class="langpane__src"><b>source string</b>“Pick up the blue block and place it in the red bowl.”</p>
+            <p class="langpane__tgt" lang="de">Nimm den blauen Klotz und lege ihn in die rote Schale.</p>
+            <p class="langpane__gloss">Take the blue block and lay it into the red bowl.</p>
+            <div class="langpane__note">
+              <b>Grammar</b><span>Two genders in one sentence: <em>den blauen Klotz</em> (accusative masculine) and <em>die rote Schale</em> (accusative feminine). The pronoun <em>ihn</em> must agree with the block, not the bowl.</span>
+              <b>Register</b><span>Du-imperative matches the lab convention of the source data; switching to “Sie” changes the perceived distance between operator and robot.</span>
+            </div>
+          </div>
+
+          <div class="langpane" role="tabpanel" id="pane-vi" aria-labelledby="tab-vi" hidden>
+            <div class="langpane__meta"><span>EN → VI · VIETNAMESE</span><b>PILOT LINE</b></div>
+            <p class="langpane__src"><b>source string</b>“Pick up the blue block and place it in the red bowl.”</p>
+            <p class="langpane__tgt" lang="vi">Nhấc khối màu xanh dương lên và đặt nó vào bát màu đỏ.</p>
+            <p class="langpane__gloss">Lift the blue block up and put it into the red bowl.</p>
+            <div class="langpane__note">
+              <b>Specificity</b><span><em>Xanh dương</em> (blue) versus <em>xanh lá</em> (green) is the most common failure when English “blue/green” is translated without the scene. The classifier <em>khối</em> carries the object class.</span>
+              <b>Spine</b><span>Verb chain preserved; the pronoun <em>nó</em> is used once, where Vietnamese would not repeat it.</span>
+            </div>
+          </div>
+
+          <div class="langpane" role="tabpanel" id="pane-es" aria-labelledby="tab-es" hidden>
+            <div class="langpane__meta"><span>EN → ES · SPANISH</span><b>OPENING LINE</b></div>
+            <p class="langpane__src"><b>source string</b>“Pick up the blue block and place it in the red bowl.”</p>
+            <p class="langpane__tgt" lang="es">Coge el bloque azul y colócalo en el cuenco rojo.</p>
+            <p class="langpane__gloss">Take the blue block and place it in the red bowl.</p>
+            <div class="langpane__note">
+              <b>Grammar</b><span><em>Colócalo</em>: the enclitic <em>lo</em> agrees with <em>bloque</em>. Splitting the pronoun changes the referent in fast operator speech.</span>
+              <b>Region</b><span><em>Coge</em> (Spain) versus <em>toma / agarra</em> (parts of Latin America). The line is region-tagged, not just language-tagged.</span>
+            </div>
+          </div>
+
+          <div class="langpane" role="tabpanel" id="pane-ja" aria-labelledby="tab-ja" hidden>
+            <div class="langpane__meta"><span>EN → JA · JAPANESE</span><b>OPENING LINE</b></div>
+            <p class="langpane__src"><b>source string</b>“Pick up the blue block and place it in the red bowl.”</p>
+            <p class="langpane__tgt" lang="ja">青いブロックを持ち上げて、赤いボウルに入れてください。</p>
+            <p class="langpane__gloss">Please lift the blue block and put it in the red bowl.</p>
+            <div class="langpane__note">
+              <b>Register</b><span>The polite <em>desu–masu</em> form is a product decision, recorded per dataset — not a translator preference.</span>
+              <b>Alignment</b><span>Verb-final order hides the action spine in syntax. The segment map is stored explicitly, not inferred from word order.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lab__foot">
+          <b>Sample, not a dataset.</b>
+          <span>These are illustrative localizations written under our protocol for a standard manipulation schema. Values here are not from a client dataset, and no client data is shown anywhere on this site.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="method">
+  <div class="shell">
+    <div class="sec-head">
+      <div class="sec-head__main reveal">
+        <div class="sec-head__index"><span>04</span> The method <span>Recursive learning × the Archimedes principle</span></div>
+        <h2 class="display-l">A loop that remembers. A gate that refuses to guess.</h2>
+      </div>
+      <div class="sec-head__aside reveal" style="--d:100ms">
+        <p>Two mechanisms from the founder's preprint, applied to data work — an adaptation we state plainly on the method page. The loop turns every localized episode into memory; the gate decides when a cheap tier has displaced enough verified work to be trusted with the next line.</p>
+      </div>
+    </div>
+
+    <div class="method__grid">
+      <div class="method__copy reveal">
+        <p class="lede">Recursive learning is an operator over an episode store: execute, capture, consolidate, inject. The Archimedes Principle is a competence gate: a cheap tier displaces expensive work only in proportion to verified acceptance.</p>
+        <div class="prose">
+          <p>Together they make a cost–quality claim precise enough to be wrong. The gate pays only when the verified acceptance rate <em>q</em> clears the tier cost ratio, and its quality is exactly as good as its verifier — a bound, not a promise. We use the same decision layer on translation: a fast first pass may carry a line only where a measured acceptance rate clears the ratio; a human reviewer is the large tier; and the verifier is never the producer.</p>
+        </div>
+        <div class="eqrow" aria-label="The three governing formulas">
+          <div class="eq">
+            <div class="eq__math">q = pρ + (1 − p)α</div>
+            <div class="eq__note">Acceptance probability</div>
+          </div>
+          <div class="eq">
+            <div class="eq__math">E[C<sub>gate</sub>] = c<sub>S</sub> + (1 − q) c<sub>L</sub></div>
+            <div class="eq__note">Expected cost per task</div>
+          </div>
+          <div class="eq">
+            <div class="eq__math">q &gt; c<sub>S</sub> / c<sub>L</sub></div>
+            <div class="eq__note">Break-even · Proposition 4.3</div>
+          </div>
+        </div>
+        <p style="margin-top:24px"><a class="link-arrow" href="method.html">Read the full method, the proofs and the bench <span aria-hidden="true">→</span></a></p>
+        <p style="margin-top:14px"><a class="link-arrow" href="assets/docs/Milosavljevic_2025_Recursive-Learning-and-the-Archimedes-Principle.pdf" target="_blank" rel="noopener">The preprint — PDF, 21 pages <span aria-hidden="true">↗</span></a></p>
+      </div>
+
+      <div class="reveal" style="--d:120ms">
+        <div class="loopcard" data-loop-card>
+          <div class="loopcard__head">
+            <h3>Fig. 1 — The recursion operator</h3>
+            <span>R = I ∘ D</span>
+          </div>
+          <div class="loop">
+            <svg class="loop__svg" viewBox="0 0 360 360" role="group" aria-label="Recursive learning loop">
+              <circle class="loop__ring" cx="180" cy="180" r="140"/>
+              <circle class="loop__ring loop__ring--inner" cx="180" cy="180" r="98"/>
+              <g class="loop__center">
+                <text x="180" y="176" text-anchor="middle" data-loop-title>Execute</text>
+                <text x="180" y="194" text-anchor="middle" class="small">R1 — R4</text>
+              </g>
+              <g class="loop__node is-on" data-loop="1" tabindex="0" role="button" aria-pressed="true" aria-label="Stage R1: execute">
+                <circle cx="180" cy="64" r="46"/>
+                <text x="180" y="60" text-anchor="middle"><tspan x="180">R1</tspan><tspan x="180" dy="12">EXECUTE</tspan></text>
+              </g>
+              <g class="loop__node" data-loop="2" tabindex="0" role="button" aria-pressed="false" aria-label="Stage R2: capture">
+                <circle cx="296" cy="180" r="46"/>
+                <text x="296" y="176" text-anchor="middle"><tspan x="296">R2</tspan><tspan x="296" dy="12">CAPTURE</tspan></text>
+              </g>
+              <g class="loop__node" data-loop="3" tabindex="0" role="button" aria-pressed="false" aria-label="Stage R3: consolidate">
+                <circle cx="180" cy="296" r="46"/>
+                <text x="180" y="292" text-anchor="middle"><tspan x="180">R3</tspan><tspan x="180" dy="12">CONSOLIDATE</tspan></text>
+              </g>
+              <g class="loop__node" data-loop="4" tabindex="0" role="button" aria-pressed="false" aria-label="Stage R4: inject">
+                <circle cx="64" cy="180" r="46"/>
+                <text x="64" y="176" text-anchor="middle"><tspan x="64">R4</tspan><tspan x="64" dy="12">INJECT</tspan></text>
+              </g>
+            </svg>
+            <div class="loop__stage">
+              <button class="loop__btn" type="button" data-loop="1" data-name="Execute" data-detail-title="R1 — Execute" data-detail="A batch is localized: first-pass model, human translator, or both. Every string is attempted as a typed artifact, not as prose." aria-pressed="true">
+                <span class="no">R1</span><span class="name">Execute</span><span class="desc">Translate; log the decision.</span>
+              </button>
+              <button class="loop__btn" type="button" data-loop="2" data-name="Capture" data-detail-title="R2 — Capture" data-detail="Each line becomes an episode: source, target, language, termbase version, segment alignment, reviewer, cost, wall time." aria-pressed="false">
+                <span class="no">R2</span><span class="name">Capture</span><span class="desc">One typed record per line.</span>
+              </button>
+              <button class="loop__btn" type="button" data-loop="3" data-name="Consolidate" data-detail-title="R3 — Consolidate" data-detail="The termbase and the statistics are updated, and a dated digest of recurring failures is distilled — from raw episodes, never from the previous summary." aria-pressed="false">
+                <span class="no">R3</span><span class="name">Consolidate</span><span class="desc">Termbase + failure digest.</span>
+              </button>
+              <button class="loop__btn" type="button" data-loop="4" data-name="Inject" data-detail-title="R4 — Inject" data-detail="The digest and termbase enter the context of the next batch. The output of one run changes the distribution of the next — that is what makes the loop recursive." aria-pressed="false">
+                <span class="no">R4</span><span class="name">Inject</span><span class="desc">Memory conditions the next run.</span>
+              </button>
+            </div>
+          </div>
+          <div class="loopcard__detail"><b>R1 — Execute</b>A batch is localized: first-pass model, human translator, or both. Every string is attempted as a typed artifact, not as prose.</div>
+          <p class="loopcard__foot">§5 of the preprint. Drift is countered by provenance; collapse by the probe. Neither countermeasure is a proof of safety, and the paper says so.</p>
+        </div>
+
+        <div class="gatecard">
+          <div class="gatecard__head">
+            <h3>Fig. 2 — The competence gate</h3>
+            <span>π<sub>θ</sub>(t)</span>
+          </div>
+          <div class="gate">
+            <div class="gate__row">
+              <span class="gate__label">input</span>
+              <div class="gate__track"><span class="gnode">instruction</span><span class="gate__arrow">→</span><span class="gnode">competence estimate</span><span class="gate__arrow">→</span><span class="gnode gnode--small">cheap tier attempt</span></div>
+            </div>
+            <div class="gate__row">
+              <span class="gate__label">verify</span>
+              <div class="gate__track"><span class="gnode gnode--verifier">independent verifier</span><span class="gate__arrow">→</span><span class="gnode">accepted · deliver</span></div>
+            </div>
+            <div class="gate__row">
+              <span class="gate__label">escalate</span>
+              <div class="gate__track"><span class="gnode gnode--ghost">rejected</span><span class="gate__arrow">→</span><span class="gnode gnode--large">human reviewer · large tier</span></div>
+            </div>
+            <div class="gate__row">
+              <span class="gate__label">always</span>
+              <div class="gate__track"><span class="gnode gnode--ghost">episode logged</span><span class="gate__arrow">→</span><span class="gnode gnode--ghost">termbase updated</span></div>
+            </div>
+          </div>
+          <p class="gatecard__foot">The gate is a <b>cost mechanism</b>, never a capability mechanism. It cannot be safer than its verifier (Prop. 6.11) — which is why the reviewer is never the producer.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--ink evidence noise" id="evidence">
+  <div class="shell">
+    <div class="sec-head">
+      <div class="sec-head__main reveal">
+        <div class="sec-head__index"><span>05</span> Evidence <span>The deployment audit</span></div>
+        <h2 class="display-l">We reported the failure <span class="serif">before</span> the product.</h2>
+      </div>
+      <div class="sec-head__aside reveal" style="--d:100ms">
+        <p>Most vendors show a benchmark. Here is a deployment audit in full, including the part where the mechanism never fired.</p>
+      </div>
+    </div>
+
+    <div class="ev__grid">
+      <div class="ev__copy reveal">
+        <p class="lede">Across 153 instrumented alternation decisions, the cheap tier was attempted zero times. Every one of the 143 cost-ledger rows reads direct-to-large. The gate was not wrong. It was never reached.</p>
+        <div class="prose">
+          <p>The cause was not a competence judgement. A local backend was unreachable, and the system recorded an unreachable backend as a <em>non-attempt</em> — which is logically indistinguishable from “no evidence yet.” The estimator froze in its permissive branch and no amount of data could have moved it. The paper predicted this non-identifiability; the deployment exhibited it.</p>
+          <p>The second cause was structural. All 143 pattern keys were unique, so no task ever accumulated the three prior neighbours the gate needs before it can evaluate a success rate. The maximum neighbourhood size ever observed was two. A gate whose patterns do not repeat is a gate that cannot open.</p>
+          <p>This is on a company site because our product is verified translation. A verification company that hides its own null result is selling confidence, not evidence. The preprint also states what the audit cannot establish — that gating saves money, that the cheap tier clears the threshold, that the verifier is sound — and closes with a pre-registered four-arm protocol that would settle it.</p>
+        </div>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__num"><span data-count="1225">1,225</span></div>
+            <p class="stat__label">Episode records parsed</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num stat__num--signal"><span data-count="0">0</span> <small>/ 153</small></div>
+            <p class="stat__label">Small-tier attempts in instrumented decisions</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num">1.05<small>B</small></div>
+            <p class="stat__label">Tokens attributed (1,049,656,173)</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num">68.2<small>%</small></div>
+            <p class="stat__label">Outcome success, censored corpus</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num">93.5<small>%</small></div>
+            <p class="stat__label">Escalated answers approved by reviewer</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num">49.5<small>k</small></div>
+            <p class="stat__label">Mean tokens per routed task</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num">8.6<small>s</small></div>
+            <p class="stat__label">Median wall time per task</p>
+          </div>
+          <div class="stat">
+            <div class="stat__num stat__num--lime">143<small>/143</small></div>
+            <p class="stat__label">Distinct pattern keys · gate structurally unreachable</p>
+          </div>
+        </div>
+
+        <div class="auditlist">
+          <p class="auditlist__head">Six findings, reported without selection</p>
+          <ol>
+            <li><span><b>The gate was never exercised.</b> The small tier was invoked zero times across 153 instrumented tasks.</span></li>
+            <li><span><b>It was structurally unreachable.</b> No task accumulated the three required prior neighbours; the maximum was two, the median zero.</span></li>
+            <li><span><b>The pattern vocabulary does not repeat.</b> All 143 pattern keys and all 143 eight-token slugs were unique: K ≈ n.</span></li>
+            <li><span><b>The fallback is adequate but unexamined.</b> 93.5% of escalated answers were approved — and with no small-tier answers, that says nothing about what the gate would have bought.</span></li>
+            <li><span><b>The price of the null regime is the full price.</b> 7.07M tokens at 49.5k per task, 8.6 s median latency: identical to a system with no gate.</span></li>
+            <li><span><b>Non-identifiability appeared exactly as predicted.</b> An absent backend produced episodes indistinguishable from absent evidence.</span></li>
+          </ol>
+        </div>
+      </div>
+
+      <aside class="papercard reveal" style="--d:140ms">
+        <div class="papercard__top">
+          <span class="papercard__kind">Preprint · under review nowhere</span>
+          <span class="papercard__status"><span class="dot dot--live"></span>Public</span>
+        </div>
+        <h3>Recursive Learning and the Archimedes Principle</h3>
+        <p class="papercard__meta">
+          Competence-gated tier alternation as a cost–quality mechanism for autonomous coding agents.<br><br>
+          <b>Dušan Milosavljević</b><br>
+          Praktess Research · Aura Code Project<br>
+          10 September 2025 · 21 pages<br>
+          Deployment audited: autonomous coding agent — not robot data, not translation.
+        </p>
+        <p class="mono" style="font-size:9px;color:var(--muted);letter-spacing:.1em;margin-bottom:16px">PREPRINT · NOT PEER REVIEWED · PRE-REGISTERED PROTOCOL NOT YET EXECUTED</p>
+        <div class="papercard__actions">
+          <a class="btn btn--signal" href="assets/docs/Milosavljevic_2025_Recursive-Learning-and-the-Archimedes-Principle.pdf" target="_blank" rel="noopener">Download the preprint <span aria-hidden="true">↓</span></a>
+          <a class="btn btn--ghost" href="method.html">Read it explained <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="papercard__links">
+          <a href="https://orcid.org/0009-0006-4706-0467" target="_blank" rel="noopener me">ORCID</a>
+          <a href="https://scholar.google.com/citations?user=Gbp13nYAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+          <a href="method.html#protocol">The protocol</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="languages">
+  <div class="shell">
+    <div class="sec-head">
+      <div class="sec-head__main reveal">
+        <div class="sec-head__index"><span>06</span> Language lines <span>Where we start</span></div>
+        <h2 class="display-l">Founding lines, named <span class="serif">honestly</span>.</h2>
+      </div>
+      <div class="sec-head__aside reveal" style="--d:100ms">
+        <p>We will not draw a world map of flags and call it capability. These are the lines with named reviewers; the rest are opening on request.</p>
+      </div>
+    </div>
+
+    <div class="langs__grid">
+      <div class="reveal">
+        <p class="lede measure" style="margin-bottom:24px">A line is a reviewer, a termbase and a verification record — not a language tag in a dropdown.</p>
+        <div class="langtable">
+          <div class="langrow"><span class="langrow__code">EN → SR</span><span class="langrow__name">Serbian <small>Latin &amp; Cyrillic · native line</small></span><span class="langrow__state langrow__state--live">Pilot open</span></div>
+          <div class="langrow"><span class="langrow__code">EN → HR</span><span class="langrow__name">Croatian <small>native line</small></span><span class="langrow__state langrow__state--live">Pilot open</span></div>
+          <div class="langrow"><span class="langrow__code">EN → BS</span><span class="langrow__name">Bosnian <small>native line</small></span><span class="langrow__state langrow__state--live">Pilot open</span></div>
+          <div class="langrow"><span class="langrow__code">EN → VI</span><span class="langrow__name">Vietnamese <small>in-market · Da Nang</small></span><span class="langrow__state langrow__state--live">Pilot open</span></div>
+          <div class="langrow"><span class="langrow__code">EN → DE</span><span class="langrow__name">German <small>reviewer network</small></span><span class="langrow__state langrow__state--open">Opening</span></div>
+          <div class="langrow"><span class="langrow__code">EN → ES</span><span class="langrow__name">Spanish <small>region-tagged</small></span><span class="langrow__state langrow__state--open">Opening</span></div>
+          <div class="langrow"><span class="langrow__code">EN → FR</span><span class="langrow__name">French <small>reviewer network</small></span><span class="langrow__state langrow__state--open">Opening</span></div>
+          <div class="langrow"><span class="langrow__code">EN → JA</span><span class="langrow__name">Japanese <small>register-tagged</small></span><span class="langrow__state langrow__state--open">Opening</span></div>
+        </div>
+        <p class="langs__note">If your language is not on this list, say so. The first dataset defines the line; the line is named after the dataset, not before it. Right-to-left scripts are handled as a layout-and-alignment problem, not only a text problem.</p>
+      </div>
+
+      <div class="reveal" style="--d:120ms">
+        <div class="anatomy">
+          <div class="anatomy__head">Intake checklist · what a line needs</div>
+          <ul>
+            <li><span><b>The dataset and its schema.</b><span>RLDS / X-Embodiment / LeRobot / HDF5 / JSONL — plus a sample file we are allowed to read.</span></span></li>
+            <li><span><b>Source language and target languages.</b><span>Including regional variants and script preferences.</span></span></li>
+            <li><span><b>Segment annotations.</b><span>Where each instruction starts and ends, and how it maps to the action timeline.</span></span></li>
+            <li><span><b>Termbase or none.</b><span>Existing object names, verb conventions, units, brand names, safety phrasing.</span></span></li>
+            <li><span><b>An evaluation slice.</b><span>200–500 lines your own reviewers can score blind.</span></span></li>
+            <li><span><b>A reviewer contact on your side.</b><span>One person who can settle a referent dispute in under a day.</span></span></li>
+          </ul>
+        </div>
+        <p class="langs__note" style="margin-top:14px">We do not need your model weights. We do not train on your data. The verifier never sees the producer's translation until its own pass is complete.</p>
+      </div>
+    </div>
+
+    <div class="eng__grid reveal">
+      <article class="engcard">
+        <span class="engcard__label">Engagement 01</span>
+        <h3 class="h3">Pilot slice</h3>
         <ul>
-          <li>You write clearly in English and can explain <em>why</em> something is wrong, not just that it is</li>
-          <li>You have real professional depth in something — nursing, law, accounting, teaching, logistics, a trade, a language</li>
-          <li>You are comfortable working alone with no manager and no colleagues</li>
-          <li>You can follow a long, fussy instruction document exactly</li>
-          <li>You want irregular hours that fit around something else</li>
+          <li>2,000 strings from one dataset</li>
+          <li>One target language</li>
+          <li>Verifier report + provenance ledger</li>
+          <li>Back-translation spot check</li>
         </ul>
-      </div>
-      <div class="fit-col fit-no">
-        <div class="fit-h">This tends not to suit you if</div>
+        <p class="engcard__foot">Scope fixed before work starts</p>
+      </article>
+      <article class="engcard engcard--ink">
+        <span class="engcard__label">Engagement 02</span>
+        <h3 class="h3">Dataset pass</h3>
         <ul>
-          <li>You need steady, predictable income this month — work arrives in bursts and droughts</li>
-          <li>You want to be told what to do and get feedback as you go. Mostly you get neither</li>
-          <li>Repetitive close reading drains you. Some batches are genuinely dull</li>
-          <li>You want a job title, a team, a contract, sick pay. This is freelance, project by project</li>
-          <li>You are hoping for passive income. Every dollar here is an hour worked</li>
+          <li>The full instruction and annotation layer</li>
+          <li>One to three target languages</li>
+          <li>Termbase delivered as an artifact</li>
+          <li>Reviewer adjudication log</li>
         </ul>
-      </div>
-    </div>
-
-    <div class="box-warn">
-      <div class="box-warn-h">The honest version</div>
-      <p>Most people who try this stop within a month. Not because it was too hard — because they were rejected by two platforms, waited three weeks for a task that never came, and concluded it was a scam. It usually isn't a scam. It is just slow, administrative, and nobody warns you about the queue.</p>
-    </div>
-  </div>
-</section>
-
-<section id="pay">
-  <div class="wrap">
-    <div class="kicker">The numbers, without the marketing</div>
-    <h2>What it actually pays.</h2>
-    <div class="body-col">
-      <p>You will see "$50/hr" and "up to $150/hr" on landing pages. Both are technically true and both are misleading. Here is the shape of it.</p>
-    </div>
-
-    <table class="pay-table">
-      <thead><tr><th>Tier</th><th>Typical rate</th><th>What gets you there</th></tr></thead>
-      <tbody>
-        <tr><td><b>General</b></td><td>$15–25/hr</td><td>Fluent written English, careful reading. The entry pool — most competitive, most task supply.</td></tr>
-        <tr><td><b>Specialist</b></td><td>$25–45/hr</td><td>Real professional expertise, or a less common language. Where most people with a career behind them land.</td></tr>
-        <tr><td><b>Expert</b></td><td>$45–100/hr</td><td>A graduate degree, a licensed profession, or deep technical domain knowledge.</td></tr>
-        <tr><td><b>Rare</b></td><td>$100–200/hr</td><td>Medicine, law, finance, formal mathematics. Genuinely scarce, genuinely verified.</td></tr>
-      </tbody>
-    </table>
-
-    <div class="body-col">
-      <h3>Four things the landing pages leave out</h3>
-      <p><b>Rates are adjusted by country.</b> Several platforms scale pay to local cost of living. The same task pays differently in Berlin and in Lagos.</p>
-      <p><b>Read the unit, not the number.</b> Some audio projects pay per <em>finished</em> hour of audio, not per hour you work. Contributors report an advertised $35–45 collapsing to about $9 an hour actually worked.</p>
-      <p><b>The gap between accepted and paid is the real cost.</b> Onboarding takes an afternoon. Waiting for a first project can take weeks. One documented account finished every onboarding step, was invited to a $60–120/hr role, and had earned $0.00.</p>
-      <p><b>Some evaluation phases are unpaid.</b> A minority of projects gate payment on reviewer acceptance after you have already done hours of real work. Read the payment terms in the project description before you start. Every time.</p>
-    </div>
-
-    <div class="box-warn">
-      <div class="box-warn-h">A realistic first three months</div>
-      <p>Two to four weeks applying and waiting. A first small batch of work. A first payment somewhere between $50 and $300. If it goes well, a few hundred dollars a month at ten to fifteen hours a week, rising as your quality history builds.</p>
-      <p><b>It is a second income that can grow into a first one. It is not a rescue from a bad month.</b> If you need money in ten days, this is the wrong door — and I would rather tell you that now than sell you a course.</p>
-    </div>
-  </div>
-</section>
-
-<section id="where" class="fair" style="border-bottom:1px solid rgba(255,255,255,.1)">
-  <div class="wrap">
-    <div class="kicker">If you're outside the US</div>
-    <h2>Your passport is the real application.</h2>
-    <p class="fair-lede">Every guide to this work is written for someone in Ohio.</p>
-    <ul class="lede-list">
-      <li>None of them mention that your ID country has to match your profile country.</li>
-      <li>That half these platforms quietly exclude you and never say so.</li>
-      <li>That your first payout can be frozen by a rule your own bank never told you about.</li>
-    </ul>
-    <p class="lede-punch">You don't have a skills problem.<br><em>You have a paperwork problem.</em></p>
-    <p class="lede-close">Paperwork is solvable. Start with what's actually open to you.</p>
-
-    <div class="checker">
-      <div class="checker-head">
-        <div>
-          <label for="country">Where is your passport from?</label>
-          <select id="country" aria-label="Select your country">
-            <option value="">Select a country…</option>
-          </select>
-        </div>
-        <p class="checker-note">Eligibility below reflects published platform policy as of August 2026. Policies change — always confirm on the platform itself before uploading documents.</p>
-      </div>
-      <div class="rows" id="rows">
-        <div class="row"><div><div class="row-name">Select a country to see your real options.</div><div class="row-why">Nine platforms checked against citizenship, ID requirements and payout rails.</div></div></div>
-      </div>
-      <div class="tally" id="tally">Nine platforms · updated August 2026</div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="two">
-      <div>
-        <div class="kicker">Why this exists</div>
-        <h2>I build the systems these platforms are grading.</h2>
-        <div class="body-col">
-          <p>I'm a Serbian citizen living in Da Nang. I hold a Serbian passport, a Vietnamese bank account, and a Payoneer balance — a combination that breaks about half the verification systems in this industry.</p>
-          <p>I also design AI agent systems. I wrote a <b>320-question evaluation benchmark</b>, ran a <b>50-day longitudinal model trial</b> publishing automated results daily, built fine-tuning pipelines on Vertex AI, and shipped a multi-agent framework to npm under MIT licence.</p>
-          <p>So when I say a rationale is weak or a rubric is ambiguous, that isn't a guess from someone who read a listicle. I've written the harness that grades them. And when I say a platform will reject your ID, it's because it rejected mine.</p>
-          <p>Most people entering this field are taught to label outputs. Almost nobody is taught what the evaluation is <em>for</em>. That gap is where the pay difference lives.</p>
-        </div>
-      </div>
-      <div class="credbox">
-        <h3>Where this comes from</h3>
+        <p class="engcard__foot">Priced per dataset after intake</p>
+      </article>
+      <article class="engcard">
+        <span class="engcard__label">Engagement 03</span>
+        <h3 class="h3">Standing line</h3>
         <ul>
-          <li><b>aura-code</b> — multi-agent framework, 1,559 tests, MIT licensed, published to npm</li>
-          <li><b>Aura Benchmark</b> — 320-question agent evaluation harness; authored questions, scoring criteria and execution</li>
-          <li><b>50-day trial</b> — longitudinal model evaluation with daily automated published results</li>
-          <li><b>Fine-tuning pipelines</b> — supervised fine-tuning on Google Vertex AI, ~11M-word Serbian legal corpus</li>
-          <li><b>Teaching</b> — BA English Language &amp; Literature, TEFL, 11+ years instructing corporate professionals</li>
-          <li><b>Enterprise operations</b> — SAP ERP superuser, Lean/PDCA, automotive tier-1 logistics</li>
+          <li>Continuous localization as data grows</li>
+          <li>Delta batches with the same ledger</li>
+          <li>Termbase and reviewer continuity</li>
+          <li>Quarterly verification quality review</li>
         </ul>
-      </div>
+        <p class="engcard__foot">For teams shipping data every month</p>
+      </article>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step"><span class="step__no">01</span><h4>Intake</h4><p>Schema, languages, segments, legal basis, evaluation slice.</p></div>
+      <div class="step"><span class="step__no">02</span><h4>Termbase</h4><p>Object names, verbs, units, safety phrasing, register decisions.</p></div>
+      <div class="step"><span class="step__no">03</span><h4>First pass</h4><p>A cheap tier attempts every line; each attempt is logged as an episode.</p></div>
+      <div class="step"><span class="step__no">04</span><h4>Verification</h4><p>An independent verifier checks referent, spine, grammar and units.</p></div>
+      <div class="step"><span class="step__no">05</span><h4>Escalation</h4><p>Rejected lines go to a named human reviewer. The decision is logged, not averaged.</p></div>
+      <div class="step"><span class="step__no">06</span><h4>Delivery</h4><p>Localized data, verifier report, provenance ledger, termbase, open questions.</p></div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="kicker">What actually stops people</div>
-    <h2>Four walls. None of them are about skill.</h2>
-    <div class="body-col"><p>Almost everyone who fails at this fails before they ever see a task. Not because the work was too hard — because of an administrative wall nobody warned them about.</p></div>
-    <div class="walls">
-      <div class="wall">
-        <div class="wall-n">WALL 01</div>
-        <h3>Citizenship vs. residence</h3>
-        <p>If your profile says one country and your ID says another, verification fails — and most platforms give you two or three attempts total. Which country you declare is a decision to make deliberately, before you sign up, not a form field to fill in casually.</p>
+<section class="section contact noise" id="contact">
+  <div class="shell">
+    <div class="contact__grid">
+      <div class="reveal">
+        <p class="eyebrow">Start a pilot</p>
+        <h2 class="display-l contact__title">Bring us one dataset.<br>We will send back a<br><em>verified slice.</em></h2>
+        <p class="contact__lede">2,000 strings, one dataset, one language, with the verifier report and the provenance ledger. If the slice does not survive your review, you have learned something cheap. If it does, you have a line.</p>
+        <p class="contact__note">No forms · No newsletter · Email the dataset card and the languages; we reply with scope and price in two working days.</p>
       </div>
-      <div class="wall">
-        <div class="wall-n">WALL 02</div>
-        <h3>Silent geography gates</h3>
-        <p>Several well-known platforms simply don't operate where you live, and won't say so until after you've built a profile. Others accept your signup but show no available tasks. Knowing which is which saves weeks.</p>
-      </div>
-      <div class="wall">
-        <div class="wall-n">WALL 03</div>
-        <h3>Getting paid, actually</h3>
-        <p>PayPal, Payoneer, Stripe and local banks each fail differently depending on where you are. Name spelling mismatches, foreign-currency restrictions, annual fees on low volume, and biometric thresholds can all hold your first payment.</p>
-      </div>
-      <div class="wall">
-        <div class="wall-n">WALL 04</div>
-        <h3>Writing like an evaluator</h3>
-        <p>Most applicants are screened out on a written sample. The bar isn't fluency — it's whether your rationale is specific, falsifiable, and useful to someone training a model. That's a learnable skill and almost nobody teaches it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="fair">
-  <div class="wrap">
-    <div class="kicker">On price</div>
-    <h2>Fair pricing, said out loud.</h2>
-
-    <p class="fair-lede">Plenty of companies already do this. They read your location, quietly adjust the number, and never mention it. <b>I'd rather write it down and let you check the arithmetic.</b></p>
-
-    <div class="body-col" style="color:#C6D2DC">
-      <p>The same hour of my time costs a different amount of life depending on where you're standing. Sixty dollars is an evening out in Berlin and most of a week's food in Lagos. Charging both people sixty dollars isn't neutral — it just hides the unfairness somewhere you can't see it.</p>
-      <p>So the price scales with your country's purchasing power, using published GDP-per-capita PPP figures. Same session, same preparation, same attention. Different number, for a stated reason.</p>
-    </div>
-
-    <blockquote class="pullquote">One price for everyone is not the same thing as treating everyone equally.</blockquote>
-
-    <div class="fair-grid">
-      <div class="fair-card">
-        <h3>I benefit from this too</h3>
-        <p>I'm a Serbian citizen living in Da Nang. My own costs are low, which is precisely why I can price an hour in Nigeria at thirty dollars without it being charity. This isn't generosity — it's arithmetic that happens to work.</p>
-      </div>
-      <div class="fair-card">
-        <h3>The floor is for me</h3>
-        <p>I can earn around twenty-eight dollars an hour doing evaluation work directly. Below that, teaching costs me money rather than earning it. The floor isn't a sales tactic. It's the line where this stops being something I can keep doing.</p>
-      </div>
-      <div class="fair-card">
-        <h3>No proof required</h3>
-        <p>I won't ask for a utility bill, check your IP address, or make you prove anything. Tell me where you are and I'll take your word for it. If the adjusted number is still out of reach, write and say so — that conversation is not a problem.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap">
-    <div class="kicker">What it costs</div>
-    <h2>Priced against your economy, not mine.</h2>
-    <div class="body-col">
-      <p>Charging one flat rate worldwide would mean someone in Lagos pays four times as much of their income as someone in Berlin for the same hour. So prices scale with <b>GDP per capita at purchasing power parity</b>, floored so the work stays sustainable for me.</p>
-      <p>The formula is published below. You can check my arithmetic.</p>
-    </div>
-
-    <div class="priceblock">
-      <div class="priceblock-head">
-        <div>
-          <label for="pcountry">Where are you?</label>
-          <select class="light" id="pcountry" aria-label="Select your country for pricing"></select>
+      <div class="contact__card reveal" style="--d:120ms">
+        <h3>Direct line</h3>
+        <a class="contact__mail" href="mailto:aura@leanproiq.com?subject=Lean%20Robotics%20IQ%20—%20pilot%20slice">aura@leanproiq.com</a>
+        <div class="contact__rows">
+          <div class="contact__row"><span>Pilot slice</span><b>2,000 strings · 1 line</b></div>
+          <div class="contact__row"><span>Turnaround</span><b>~10 working days</b></div>
+          <div class="contact__row"><span>Deliverable</span><b>Data + verifier report + ledger</b></div>
+          <div class="contact__row"><span>Not included</span><b>Model training · deployment</b></div>
+          <div class="contact__row"><span>Contact</span><b>Dušan Milosavljević</b></div>
         </div>
-        <p class="idxnote" id="idxnote">Select a country to see your rate.</p>
-      </div>
-      <div class="tiers" id="tiers"></div>
-      <div class="formula">
-        <b>How your price is calculated</b>
-        <span class="eq">price = base_rate &times; &radic;( your_country_PPP &divide; US_PPP ), floored</span>
-        Base rates are US-anchored. The square root compresses the spread — a straight linear ratio would put some countries under $10 and make the work impossible to sustain. The floor is my own opportunity cost: I can earn roughly $28/hr doing evaluation work directly, so no session is priced below that.<br><br>
-        GDP per capita PPP figures: IMF World Economic Outlook and World Bank, 2024&ndash;2025 estimates in international dollars. Approximate and refreshed periodically. <b>If your country isn't listed, ask</b> &mdash; I'll calculate it the same way.
+        <button class="contact__copy" type="button" data-copy="aura@leanproiq.com"><span aria-hidden="true">⧉</span> <span data-copy-label>Copy the address</span></button>
       </div>
     </div>
   </div>
 </section>
 
-<section class="cta">
-  <div class="wrap">
-    <div class="kicker" style="color:var(--cyan)">Start here</div>
-    <h2>The eligibility &amp; payments guide</h2>
-    <div class="body-col">
-      <p>A plain document covering all nine platforms: which accept your country, what ID they demand, how they pay, what each one actually pays, and the specific traps that block first payouts. Written from the outside-the-US position, because that's where I'm standing.</p>
-      <p>Free, no email required, no course upsell attached. Six pages. Take it and go.</p>
+</main>
+<footer class="foot">
+  <div class="shell">
+    <div class="foot__top">
+      <div class="foot__brand">
+        <svg class="brand__mark brand__mark--lg" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect x="6" y="6" width="9" height="9" fill="currentColor"/>
+          <rect x="17" y="6" width="9" height="9" fill="currentColor"/>
+          <rect x="6" y="17" width="9" height="9" fill="currentColor"/>
+          <rect x="17" y="15" width="9" height="9" fill="var(--signal)"/>
+        </svg>
+        <p class="foot__statement">Robot data<br>should travel.</p>
+        <p class="foot__sub">Lean Robotics IQ is the robotics-dataset line of Lean Progress IQ — a Praktess Research / Aura Code Project. We localize the instruction and annotation layer of robot-learning data, and we publish how we verify it.</p>
+      </div>
+      <div class="foot__cols">
+        <div class="foot__col">
+          <h3>Site</h3>
+          <a href="index.html#problem">The English-only default</a>
+          <a href="datasets.html">The work — deliverables</a>
+          <a href="method.html">Method</a>
+          <a href="index.html#evidence">Evidence — the audit</a>
+          <a href="index.html#languages">Languages</a>
+          <a href="index.html#contact">Start a pilot</a>
+        </div>
+        <div class="foot__col">
+          <h3>Research</h3>
+          <a href="assets/docs/Milosavljevic_2025_Recursive-Learning-and-the-Archimedes-Principle.pdf" target="_blank" rel="noopener">The preprint (PDF)</a>
+          <a href="https://orcid.org/0009-0006-4706-0467" target="_blank" rel="noopener me">ORCID profile</a>
+          <a href="https://scholar.google.com/citations?user=Gbp13nYAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+          <a href="method.html#protocol">Pre-registered protocol</a>
+        </div>
+        <div class="foot__col">
+          <h3>Contact</h3>
+          <a href="mailto:aura@leanproiq.com?subject=Lean%20Robotics%20IQ%20—%20pilot%20slice">aura@leanproiq.com</a>
+          <span>Da Nang, Vietnam</span>
+          <span>EN → SR / HR / BS / VI</span>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </div>
     </div>
-    <a class="btn" href="/eligibility-guide.pdf" download>Download the guide (PDF)</a>
-    <a class="btn btn-2" href="mailto:leanproiq@gmail.com?subject=1:1%20session">Ask about 1:1 sessions</a>
 
-    <div class="honest" style="background:rgba(255,255,255,.06);color:#C6D2DC">
-      <strong>What I won't tell you</strong>
-      I won't quote you a monthly income figure, because mine would be a sample size of one and yours depends on your country's rate tier, your available hours, and which platforms accept you. Anyone showing you screenshots of their earnings is selling something. This work is real, it is not passive, the task supply is inconsistent, and rates vary by where you live. I'll show you the published rates and the actual obstacles. What you make from that is yours to find out.
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap f-row">
-    <div>
-      <div class="brand" style="font-size:16px;margin-bottom:8px">Lean Progress <span>IQ</span></div>
-      <div>Dušan Milosavljević · Da Nang, Vietnam</div>
-    </div>
-    <div style="text-align:right">
-      <a href="mailto:leanproiq@gmail.com">leanproiq@gmail.com</a><br>
-      <a href="https://github.com/DusanCar-sudo">github.com/DusanCar-sudo</a>
+    <div class="foot__bottom">
+      <p>© 2026 Lean Robotics IQ · Praktess Research. Preprint research; no peer-reviewed claim is made on this site.</p>
+      <p class="foot__credit">Set in Archivo, Barlow, Instrument Serif and JetBrains Mono. Plates generated on-device by a 0.9 GB locomotion-free diffusion model (SDXS-512, DreamShaper distill) on a Radeon 680M — a small model that makes mistakes. We kept the mistakes; the verifier is for the data.</p>
+      <a class="foot__back" href="#main">Back to top <span aria-hidden="true">↑</span></a>
     </div>
   </div>
 </footer>
 
-<script>
-const PLATFORMS = [
-  {id:"outlier",   name:"Outlier (Scale AI)",  pay:"$15–100/hr",  rail:"PayPal · Airtm · ACH, weekly Tuesdays"},
-  {id:"mindrift",  name:"Mindrift (Toloka)",   pay:"$15–100+/hr", rail:"Payoneer · cost-of-living adjusted by country"},
-  {id:"opentrain", name:"OpenTrain",           pay:"$28–65/hr",   rail:"Stripe, pays into 140+ countries"},
-  {id:"meridial",  name:"Meridial",            pay:"$6–65/hr",    rail:"Global · fastest onboarding of the nine"},
-  {id:"appen",     name:"Appen",               pay:"Varies",      rail:"Payoneer · 30–45 day first payment cycle"},
-  {id:"handshake", name:"Handshake AI",        pay:"$30–300/hr",  rail:"Degree-tiered; content is assigned to the platform"},
-  {id:"braintrust",name:"Braintrust",          pay:"$50–120/hr",  rail:"Restricted region list"},
-  {id:"dataann",   name:"DataAnnotation",      pay:"$20+/hr",     rail:"Five countries only"},
-  {id:"alignerr",  name:"Alignerr",            pay:"$25–60/hr",   rail:"US identity documents only"}
-];
+<script src="assets/js/site.js" defer></script>
 
-// open | shut | check   +  reason
-const WIDE_OPEN  = {v:"open", w:"Accepts applicants from most countries."};
-const REGION_SET = ["US","GB","CA","MX","BR","IN","JP","KR","SG","DE","FR","ES","IT","NL","PL","PT","IE","SE","RO"];
-const DA_SET     = ["US","GB","CA","AU","NZ"];
-
-const COUNTRIES = [
-  ["RS","Serbia"],["VN","Vietnam"],["PH","Philippines"],["NG","Nigeria"],["IN","India"],
-  ["KE","Kenya"],["BR","Brazil"],["PL","Poland"],["UA","Ukraine"],["ID","Indonesia"],
-  ["PK","Pakistan"],["EG","Egypt"],["BD","Bangladesh"],["MX","Mexico"],["CO","Colombia"],
-  ["AR","Argentina"],["TR","Turkey"],["MA","Morocco"],["ZA","South Africa"],["GH","Ghana"],
-  ["BA","Bosnia & Herzegovina"],["HR","Croatia"],["RO","Romania"],["DE","Germany"],
-  ["US","United States"],["GB","United Kingdom"],["CA","Canada"],["AU","Australia"]
-];
-
-function verdict(pid, cc){
-  switch(pid){
-    case "alignerr":
-      return cc==="US" ? {v:"open",w:"Accepts US identity documents."}
-                       : {v:"shut",w:"Requires a US driver's licence, state ID, work permit or green card. No alternative document type is accepted."};
-    case "dataann":
-      return DA_SET.includes(cc) ? {v:"open",w:"Within the supported five-country list."}
-                                 : {v:"shut",w:"Operates in the US, UK, Canada, Australia and New Zealand only."};
-    case "braintrust":
-      return REGION_SET.includes(cc) ? {v:"open",w:"Within the supported region list."}
-                                     : {v:"shut",w:"Region-limited. Note that non-EU European countries are excluded despite being in Europe."};
-    case "handshake":
-      return {v:"check",w:"Open widely, but pay bands are tiered by degree level and content you create is assigned to the platform. Read the terms first."};
-    case "appen":
-      return {v:"check",w:"Operates in 130+ countries, but the first payment cycle runs 30–45 days. Treat as background income, not urgent income."};
-    case "outlier":
-      return {v:"open",w:"Open in 61 countries. Declare the country that matches your passport — a mismatch burns your verification attempts."};
-    case "opentrain":
-      return {v:"open",w:"Trainers across 190+ countries; Stripe payouts reach 140+. Widest geographic coverage of the nine."};
-    case "mindrift":
-      return {v:"open",w:"Broad country coverage. Rates are adjusted to local cost of living, so your tier depends on the country you declare."};
-    case "meridial":
-      return {v:"open",w:"Global. Language-specialist projects pay above the base band — useful if your first language isn't English."};
-  }
-  return {v:"check",w:"Confirm directly with the platform."};
-}
-
-
-const PPP = {
- "US":85000,"DE":72000,"AU":70000,"CA":62000,"GB":62000,"PL":50000,"RO":46000,
- "HR":45000,"TR":43000,"AR":30000,"RS":29000,"MX":25000,"BR":22000,"BA":21000,
- "CO":21000,"EG":18000,"UA":17000,"ZA":16000,"ID":16000,"VN":16000,"IN":11000,
- "MA":11000,"PH":10376,"BD":9500,"GH":7500,"KE":6500,"PK":6500,"NG":6000
-};
-const TIERS=[
- {n:"Async review",      base:70,  floor:18, w:"You send your profile, country, and a written sample. You get back a marked-up document: which platforms fit you, what to fix, and corrected application text."},
- {n:"1:1 session · 60m", base:120, floor:30, w:"Live call. Country and ID strategy, platform shortlist, payment rails set up properly, and we walk through a real application together."},
- {n:"Evaluator intensive · 90m", base:180, floor:45, w:"The writing skill that decides most screenings. What makes a rationale specific and falsifiable, worked through on real examples."},
- {n:"Package · 3 sessions", base:300, floor:75, w:"Application through first payout, plus async support between calls. For people who want it done properly rather than fast."}
-];
-function ppprice(base,ppp,floor){
-  const p = base * Math.sqrt(ppp/PPP.US);
-  return Math.max(floor, Math.round(p/5)*5);
-}
-function renderPricing(cc){
-  const t=document.getElementById("tiers"), note=document.getElementById("idxnote");
-  if(!cc||!PPP[cc]){ t.innerHTML=""; note.textContent="Select a country to see your rate."; return; }
-  const idx=Math.sqrt(PPP[cc]/PPP.US);
-  const nm=COUNTRIES.find(c=>c[0]===cc)[1];
-  note.innerHTML=`<b>${nm}</b> — GDP/capita PPP int$${PPP[cc].toLocaleString()} · index <b>${idx.toFixed(2)}</b> of US`;
-  t.innerHTML=TIERS.map(x=>`<div class="tier">
-    <div class="tier-name">${x.n}</div>
-    <div class="tier-price">$${ppprice(x.base,PPP[cc],x.floor)}<small> USD</small></div>
-    <div class="tier-base">US rate $${x.base}</div>
-    <div class="tier-what">${x.w}</div>
-  </div>`).join("");
-}
-
-const sel = document.getElementById("country");
-COUNTRIES.sort((a,b)=>a[1].localeCompare(b[1])).forEach(([cc,nm])=>{
-  const o=document.createElement("option"); o.value=cc; o.textContent=nm; sel.appendChild(o);
-});
-
-const psel=document.getElementById("pcountry");
-psel.innerHTML='<option value="">Select a country…</option>';
-COUNTRIES.forEach(([cc,nm])=>{
-  if(!PPP[cc])return;
-  const o=document.createElement("option"); o.value=cc; o.textContent=nm; psel.appendChild(o);
-});
-psel.addEventListener("change",()=>renderPricing(psel.value));
-
-const LABEL={open:"Open to you",shut:"Closed",check:"Read first"};
-
-sel.addEventListener("change",()=>{
-  const cc=sel.value, rows=document.getElementById("rows"), tally=document.getElementById("tally");
-  if(!cc){
-    rows.innerHTML='<div class="row"><div><div class="row-name">Select a country to see your real options.</div></div></div>';
-    tally.textContent="Nine platforms · updated August 2026"; return;
-  }
-  let open=0,shut=0;
-  rows.innerHTML = PLATFORMS.map(p=>{
-    const r=verdict(p.id,cc);
-    if(r.v==="open")open++; if(r.v==="shut")shut++;
-    return `<div class="row">
-      <div>
-        <div class="row-name">${p.name}</div>
-        <div class="row-why">${r.w} <span style="color:#5FC9DD">${p.pay}</span> · ${p.rail}</div>
-      </div>
-      <div class="verdict v-${r.v}">${LABEL[r.v]}</div>
-    </div>`;
-  }).join("");
-  if(PPP[cc]){ psel.value=cc; renderPricing(cc); }
-  const nm = COUNTRIES.find(c=>c[0]===cc)[1];
-  tally.innerHTML = `${nm.toUpperCase()} — <b>${open} open</b> · ${shut} closed · ${9-open-shut} to read carefully first`;
-});
-</script>
 </body>
 </html>
