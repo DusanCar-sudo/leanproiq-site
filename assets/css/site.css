@@ -1954,21 +1954,22 @@ body {
 .display-xl, .display-l, .display-m,
 .hero__title, .pagehead__title, .contact__title, .foot__statement,
 .papercard h3, .bench__head h3 {
-  font-family: var(--serif);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-family: 'Antonio', var(--disp);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }
-.display-xl, .hero__title { line-height: 0.98; letter-spacing: -0.02em; }
+.display-xl, .hero__title { line-height: 0.92; letter-spacing: 0; }
 .display-l { line-height: 0.97; }
 .display-m { line-height: 1.04; }
 .accent, .hero__title .line--accent, .hero__title .line--signal,
 .contact__title em, .pagehead__title em,
 .display-xl .signal, .display-l .signal, .display-m .signal,
 .display-xl em, .display-l em, .display-m em {
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-family: 'Antonio', var(--disp);
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
   color: var(--label);
 }
 .hero__title .line--accent, .pagehead__title em, .display-xl .lime, .display-l .lime { color: var(--cyan); }
