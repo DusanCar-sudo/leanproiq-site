@@ -1,0 +1,26 @@
+
+/* ---------- Promo: also from Lean Progress IQ ---------- */
+.promo{padding-top:0}
+.promo-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.promo-card{
+  display:flex;flex-direction:column;border:1px solid var(--line-strong);background:var(--panel);
+  color:inherit;text-decoration:none;transition:border-color .25s,transform .25s var(--ease);
+}
+.promo-card:hover{border-color:var(--blue-bright);transform:translateY(-4px)}
+.promo-card .duotone{border:0;border-bottom:1px solid var(--line-strong)}
+.promo-card .duotone.full img{filter:none;mix-blend-mode:normal;opacity:1}
+.promo-card .duotone.full::after{display:none}
+.promo-body{padding:clamp(24px,3vw,38px);display:flex;flex-direction:column;gap:14px;flex:1}
+.promo-meta{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.promo-card h3{font-family:var(--serif);font-weight:500;font-size:clamp(30px,3.6vw,46px);line-height:1;margin:0}
+.promo-card h3 em{font-style:italic;color:var(--label)}
+.promo-card p{color:var(--muted);font-size:15px;margin:0;flex:1}
+.promo-go{
+  align-self:flex-start;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--blue);color:var(--paper);padding:14px 18px;min-height:44px;display:inline-flex;align-items:center;gap:8px;
+  transition:background .2s;
+}
+.promo-card:hover .promo-go{background:var(--blue-bright)}
+.promo-card.alt .promo-go{background:none;border:1px solid var(--line-strong);color:var(--ink)}
+.promo-card.alt:hover .promo-go{border-color:var(--blue-bright);color:var(--blue-bright)}
+@media(max-width:760px){.promo-grid{grid-template-columns:1fr}}
